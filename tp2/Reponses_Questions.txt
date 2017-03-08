@@ -1,0 +1,14 @@
+1. Quelle	est	l’utilité	de	l’opérateur	=	et	du	constructeur	par	copie	?
+
+l'utilité du constructeur par copie et de l'opérateur = est d'éviter la copie attribut par attribut lorsqu'on affecte un objet d'une classe vers un autre objet d'une même classe par le constructeur de copie généré automatiquement par le compilateur.
+
+
+2. Dans	quel	cas	est-il	absolument	nécessaire	de	les	implémenter	?
+
+ 
+ Il est nécessaire de les implémenter si on a un membre pointeur de façon a assurer la duplication correcte de la zone pointée(pour faire le Deep Copy).
+
+
+
+3. Qu’est-ce	qui	différencie	l’opérateur	=	du	constructeur	par	copie	?
+un constructeur par copie produit un nouvel objet de même valeur qu'un existant, et un opérateur d'affectation affecte l'objet existant sur lequel est appelé l'opérateur à la valeur d'un autre objet existant.
