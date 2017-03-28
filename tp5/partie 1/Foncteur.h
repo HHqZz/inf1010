@@ -9,21 +9,21 @@
 #include <string>
 
 using  namespace std;
-
+template<typename T>
 class pile 
 {
 public : 
 	pile();
 	~pile();
 
-	template<typename T>
+	
 	bool empiler(T element);
-	template <typename T>
+	
 	bool depiler(T &variable );
 	bool estVide();
 	bool estPleine();
 	int obtenirTaille();
-	auto obtenirSommet();
+	T* obtenirSommet();
 
 
 
@@ -33,71 +33,83 @@ private :
 
 	int  capacite_;
 	int	nbElement_=0;
-	template <typename T>
-	vector <T> tableau_(capacite_);
+	T* tableau_;
 
 
 	
 };
 
 
+template <typename T>
+pile<T>::~pile() {
 
-pile::pile() {
-	capacite_ = 6; // la valeur doit etre fixe const..
-	nbElement_ = 0;
+	
 
+
+	delete[] tableau_;
+	
 }
 
 template<typename T>
-bool pile::empiler (T element)
+pile<T>::pile()  {
+	capacite_ = 6; // la valeur doit etre fixe const..
+	nbElement_ = 0;
+	tableau_ = new T[capacite_];
+}
+
+template<typename T>
+bool pile<T>::empiler (T element)
 {
 	if (!estPleine())
 	{
-		tableau_.push_back(element);
+		tableau_[nbElement_ ] = element;
+		nbElement_++;
 		return 1;
 	}
 
 	else
 	{
-		cout << " Echec, la pile est pleine";
 		return 0;
 	}
 }
 
 template <typename T>
-bool pile::depiler(T &variable) // revoir retour par parametre
+bool pile<T>::depiler(T &variable) // revoir retour par parametre
 {
 	
 
 	if (!estVide())
 	{
-		tableau_.pop_back();
+		variable = (*obtenirSommet());
+		nbElement_--;
 		return 1;
 	}
 
 	else
 	{
-		cout << "La pile est deja vide !";
+	
 		return 0;
 	}
 
 }
 
-bool pile::estVide() {
-	if (nbElement_>0 ) {
-		cout << "Pile nest pas vide" << endl;
-		return 0;
-	}
+template <typename T>
+bool pile<T>::estVide() {
+	if (nbElement_==0) {
+		
+		return 1 ;
 
+	}
+	else return 0;
 
 }
 
 
-
-bool pile::estPleine() {
+template <typename T>
+bool pile<T>::estPleine() {
 	if (nbElement_==capacite_)
 	{
-		cout << "Pile est pleine" << endl;
+		
 		return 1;
 	}
 	else {
@@ -106,14 +118,16 @@ bool pile::estPleine() {
 
 }
 
-int pile::obtenirTaille(){
+template <typename T>
+int pile<T>::obtenirTaille(){
 
 	return nbElement_;
 
 }
 
-auto pile::obtenirSommet() {
+template <typename T>
+T* pile<T>::obtenirSommet() {
 
-	return  tableau_[nbElement_];
+	return  &tableau_[nbElement_-1];
 
 }
