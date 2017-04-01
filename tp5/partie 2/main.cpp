@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-
+#include <map>
 #include "conteneurGenesListe.h"
 #include "conteneurGenesMap.h"
 #include "conteneurGenes.h"
@@ -51,12 +51,17 @@ int main()
 	cout << "----------------------------------------------------------" << endl;
 	cout << "AFFICHAGE PAR ESPECE ET NOM\n" << endl;
 	// !!!!  A FAIRE: afficher les gènes par espèce et nom dans la sortie standard
-	
+	genes->afficherParEspeceEtNom(cout);
 
 	cout << "----------------------------------------------------------" << endl;
 	cout << "RECHERCHE DU GENE 25107" << endl;
 	// !!!! A FAIRE: rechercher et afficher le gène ayant l'ID 25107
 	// Le programme doit afficher "Le gène 25107 n'a pas été trouvé" si le géne n'est pas trouvé
+	
+	if (genes->trouver(25107) == nullptr)
+		cout << "Le gène 25107 n'a pas été trouvé" << endl;
+	else
+		cout << genes->trouver(25107) << endl;
 	
 
 	cout << "----------------------------------------------------------" << endl;
@@ -64,20 +69,26 @@ int main()
 	// !!!! A FAIRE: retirer le gène 2290
 	// Le programme doit afficher "Le gène a été retiré" si le retrait réussit, 
 	// ou bien "Le gène 2290 n'a pas été trouvé" si le retrait échoue
-
+	if (genes->retirer(2290))
+		cout << "Le gène 2290 a été retiré " << endl;
+	else
+		cout << "Le gène 2290 n'a pas été trouvé" << endl;
 	
 	cout << "----------------------------------------------------------" << endl;
 	cout << "RETRAIT DE L'ESPECE HOMO SAPIENS" << endl;
 	// !!!! A FAIRE: retirer tous les gènes de l'espèce Homo sapiens
 	// Le programme doit afficher le nombre de gènes retirés ("Nombre de genes retires = XX")
-	
+	cout << "nombre de genes retires = " << genes->retirerEspece("Homo sapiens") << endl;
 
 	cout << "----------------------------------------------------------" << endl;
 	cout << "RETRAIT DU GENE 552" << endl;
 	// !!!! A FAIRE: retirer le gène 552
 	// Le programme doit afficher "Le gène a été retiré" si le retrait réussit, 
 	// ou bien "Le gène 552 n'a pas été trouvé" si le retrait échoue
-	
+	if (genes->retirer(552))
+		cout << "Le gène 552 a été retiré " << endl;
+	else
+		cout << "Le gène 552 n'a pas été trouvé" << endl;
 
 	cout << "----------------------------------------------------------" << endl;
 	cout << "MODIFICATION DU NOM DES GENES DE Mus musculus: Avpr1a-->XXXXX, Fmr1-->YYYYY et UwtA1-->ZZZZZ" << endl;
@@ -86,11 +97,16 @@ int main()
 	// Gène Fmr1 --> nouveau nom = "YYYYY"
 	// Gène UwtA1 --> nouveau nom = "ZZZZZ"
 	// Le programme doit afficher le nombre de gènes modifiés ("Modification de XX nom(s) effectuée")
-
+	map<string, string> map;
+	map.insert(make_pair("Avpr1a", "XXXXX"));
+	map.insert(make_pair("Fmr1", "YYYYY"));
+	map.insert(make_pair("UwtA1", "ZZZZZ"));
+	cout << "nombre degene modifies = " << genes->modifierNoms("Mus musculus", map) << endl;
 
 	cout << "----------------------------------------------------------" << endl;
 	cout << "AFFICHAGE PAR LONGEUR\n" << endl;
 	// !!!! A FAIRE: afficher les gènes par longueur
+	genes->afficherParLongueur(cout);
 	
 
 	// !!!! A FAIRE: N'OUBLIEZ PAS DE RÉPONDRE AUX QUESTIONS DANS UN FICHIER TEXTE !!!!
