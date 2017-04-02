@@ -1,3 +1,10 @@
+/*********************************************************
+* Titre: Travail pratique #5 - conteneurGenesMap.h
+* Date:  04 Avril 2017
+*Auteur : Constantin Bouis 1783438, Hammami Ahmed 1796523
+**********************************************************/
+
+
 #ifndef _CONTENEUR_GENES_MAP_H_
 #define _CONTENEUR_GENES_MAP_H_
 
