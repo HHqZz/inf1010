@@ -36,7 +36,7 @@ int main()
 	ifstream fichier;
 	fichier.open("genes.txt");
 	if (fichier.fail()) {
-		cout << "Fichier non trouve !\n" << endl;
+		cout << "Fichier non trouve ! Mettez genes.txt avec le fichier projet  \n" << endl;
 		return 1;
 	}
 	// Lecture des entrees de chaque gene
@@ -65,7 +65,7 @@ int main()
 	// Le programme doit afficher "Le gène 25107 n'a pas été trouvé" si le géne n'est pas trouvé
 	
 	if (genes->trouver(25107) == nullptr)
-		cout << "Le gène 25107 n'a pas été trouvé" << endl;
+		cout << "Le gene 25107 n'a pas ete trouve" << endl;
 	else
 		cout << genes->trouver(25107) << endl;
 	
@@ -76,9 +76,9 @@ int main()
 	// Le programme doit afficher "Le gène a été retiré" si le retrait réussit, 
 	// ou bien "Le gène 2290 n'a pas été trouvé" si le retrait échoue
 	if (genes->retirer(2290))
-		cout << "Le gène 2290 a été retiré " << endl;
+		cout << "Le gene 2290 a ete retire " << endl;
 	else
-		cout << "Le gène 2290 n'a pas été trouvé" << endl;
+		cout << "Le gene 2290 n'a pas ete trouve" << endl;
 	
 	cout << "----------------------------------------------------------" << endl;
 	cout << "RETRAIT DE L'ESPECE HOMO SAPIENS" << endl;
@@ -92,9 +92,9 @@ int main()
 	// Le programme doit afficher "Le gène a été retiré" si le retrait réussit, 
 	// ou bien "Le gène 552 n'a pas été trouvé" si le retrait échoue
 	if (genes->retirer(552))
-		cout << "Le gène 552 a été retiré " << endl;
+		cout << "Le gene 552 a ete retire " << endl;
 	else
-		cout << "Le gène 552 n'a pas été trouvé" << endl;
+		cout << "Le gene 552 n'a pas ete trouve " << endl;
 
 	cout << "----------------------------------------------------------" << endl;
 	cout << "MODIFICATION DU NOM DES GENES DE Mus musculus: Avpr1a-->XXXXX, Fmr1-->YYYYY et UwtA1-->ZZZZZ" << endl;
@@ -107,7 +107,7 @@ int main()
 	map.insert(make_pair("Avpr1a", "XXXXX"));
 	map.insert(make_pair("Fmr1", "YYYYY"));
 	map.insert(make_pair("UwtA1", "ZZZZZ"));
-	cout << "nombre degene modifies = " << genes->modifierNoms("Mus musculus", map) << endl;
+	cout << "nombre de gene modifies = " << genes->modifierNoms("Mus musculus", map) << endl;
 
 	cout << "----------------------------------------------------------" << endl;
 	cout << "AFFICHAGE PAR LONGEUR\n" << endl;

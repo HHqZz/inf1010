@@ -199,32 +199,54 @@ void ConteneurGenesListe::afficherEspece(const string &espece, ostream& out) con
  * Paramètres       : string espece, map<string,string>
  * Type de retour   : int = Nombre de noms modifiés dans la liste
  **********************************************************************************/
-unsigned int ConteneurGenesListe::modifierNoms(const string &espece, const map<string, string> &noms) {
-	Gene* gene;
-	list<Gene*>::iterator itGene = liste_.begin();
-	unsigned int nombreModifies = 0;
-	for (auto it = noms.begin(); it != noms.end();)
+unsigned int ConteneurGenesListe::modifierNoms(const string & espece, const map<string, string>& noms)
+{
+	int compteur = 0;
+
+	if (!liste_.empty() )																		 // On verifie que la liste  n'est pas vide
 	{
-		itGene = find_if(liste_.begin(), liste_.end(),
-			bind(logical_and<bool>(),
-				bind(MemeNom(new Gene(0,"","",it->first,"")), _1),
-				bind(MemeEspece(new Gene(0,"","",espece,"")), _1)
-			)
-		);
-		if (itGene != liste_.end())
+		auto iteratorList = find_if(liste_.begin(), liste_.end(), MemeEspece(new Gene(0, "", "", espece, "")));  // On recupere l'iterator qui pointe vers l'espece passée en parametre
+
+		while (iteratorList != liste_.end())
 		{
-			gene = *itGene;
-			gene->setNom(it->second);
-			fill_n(itGene, 1, gene);
-			nombreModifies++;
-		}
-		else
-		{
-			++it;
+			auto iteratorMap = noms.find((*iteratorList)->getNom());
+			if (iteratorMap != noms.end())
+			{
+				(*iteratorList)->setNom((*iteratorMap).second);
+				++compteur;
+			}
+
+			iteratorList = find_if(++iteratorList, liste_.end(), MemeEspece(new Gene(0, "", "", espece, "")));
 		}
 	}
-	return nombreModifies;
 
+	return compteur;
 }
 
 
+		/*Gene* gene;
+		list<Gene*>::iterator itGene = liste_.begin();
+		unsigned int nombreModifies = 0;
+		for (auto it = noms.begin(); it != noms.end();)
+		{
+		itGene = find_if(liste_.begin(), liste_.end(),
+		bind(logical_and<bool>(),
+		bind(MemeNom(new Gene(0,"","",it->first,"")), _1),
+		bind(MemeEspece(new Gene(0,"","",espece,"")), _1)
+		)
+		);
+		if (itGene != liste_.end())
+		{
+		gene = *itGene;
+		gene->setNom(it->second);
+		fill_n(itGene, 1, gene);
+		nombreModifies++;
+		}
+		else
+		{
+		++it;
+		}
+		}
+		return nombreModifies;
+
+		}*/
