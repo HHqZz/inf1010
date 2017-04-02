@@ -1,3 +1,9 @@
+/*********************************************************
+* Titre: Travail pratique #5 - Foncteur.h
+* Date:  04 Avril 2017
+*Auteur : Constantin Bouis 1783438, Hammami Ahmed 1796523
+**********************************************************/
+
 #ifndef _FONCTEUR_H_
 #define _FONCTEUR_H_
 #include "Gene.h"
