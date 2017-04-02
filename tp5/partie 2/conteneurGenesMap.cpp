@@ -1,26 +1,53 @@
+/*********************************************************
+* Titre: Travail pratique #5 - conteneurGenesMap.cpp
+* Date:  04 Avril 2017
+*Auteur : Constantin Bouis 1783438, Hammami Ahmed 1796523
+**********************************************************/
+
+
 #include "conteneurGenesMap.h"
 #include <vector>
 #include <iterator>
 #include "Foncteur.h"
 
-//constructeur par defaut
+
+
+/***********************************************************************************
+ * Description      : Constructeur par defaut
+ * Paramètres       : 
+ * Type de retour   : 
+ **********************************************************************************/
 ConteneurGenesMap::ConteneurGenesMap()
 {
 
 }
 
-//destructeur
+/***********************************************************************************
+ * Description      : Destructeur qui vide la map
+ * Paramètres       :  
+ * Type de retour   : 
+ **********************************************************************************/
 ConteneurGenesMap::~ConteneurGenesMap()
 {
 	vider();
 }
-//methode qui permet d'inserer un gene dans le map de la classe COnteneurGeneMap
+
+/***************************************************************************************************
+ * Description      : methode qui permet d'inserer un gene dans le map de la classe COnteneurGeneMap
+ * Paramètres       : int , string, string, string, string
+ * Type de retour   : void
+ ****************************************************************************************************/
 void ConteneurGenesMap::inserer(unsigned int id, const string &nom, const string &desc, const string &espece, const string &contenu) {
 	map_.insert(pair<string, Gene*>(espece, new Gene(id, nom, desc, espece, contenu)));			//insertion du gene dans la map
 }
 
 
-//Methode qui permet de trouver un gene par son id dans le map
+
+/***************************************************************************************************
+ * Description      : Methode qui permet de trouver un gene par son id dans le map
+ * Paramètres       : int
+ * Type de retour   : Gene*
+ ****************************************************************************************************/
 Gene* ConteneurGenesMap::trouver(unsigned int id) const{
 	if (!map_.empty())												//on verifie si la map est vide ou non
 	{
@@ -37,7 +64,12 @@ Gene* ConteneurGenesMap::trouver(unsigned int id) const{
 
 
 
-//Methode qui permet de retirer un gene  qui se trouve dans le map selon son id
+
+/***************************************************************************************************
+ * Description      : Methode qui permet de retirer un gene  qui se trouve dans le map selon son id
+ * Paramètres       : int
+ * Type de retour   : Renvoie True si le gene dont l'id a été donné en parametre est retiré
+ ****************************************************************************************************/
 bool ConteneurGenesMap::retirer(unsigned int id) {
 	if (!map_.empty())									//on verifie si la map est vide ou non
 	{
@@ -57,7 +89,12 @@ bool ConteneurGenesMap::retirer(unsigned int id) {
 
 }
 
-//Methode qui permet de retirer une espece de gene contenue dans le map et retourne le nbr de gene retire
+
+/*****************************************************************************************************************************
+ * Description      : Methode qui permet de retirer une espece de gene contenue dans le map et retourne le nbr de gene retire
+ * Paramètres       : string espece
+ * Type de retour   : Renvoie un int contenant le nombre genes supprimés
+ ******************************************************************************************************************************/
 unsigned int ConteneurGenesMap::retirerEspece(const string &espece) {
 	int nbGeneSupprime = 0;
 	if (!map_.empty())												//on verifie si la map est vide ou non
@@ -76,7 +113,12 @@ unsigned int ConteneurGenesMap::retirerEspece(const string &espece) {
 }
 
 
-//methode qui permet de vider la map 
+ 
+/***************************************************************************************************
+ * Description      : methode qui permet de vider la map
+ * Paramètres       : 
+ * Type de retour   : Void
+ ****************************************************************************************************/
 void ConteneurGenesMap::vider() {
 	if (!map_.empty())											//on verifie si la map est vide ou non
 	{
@@ -91,7 +133,12 @@ void ConteneurGenesMap::vider() {
 }
 
 
-//methode pour l affichage de contenu de la multimap suivant le critere du nom d espece et du nom du gene
+
+/*************************************************************************************************************************
+ * Description      : Methode pour l affichage de contenu de la map suivant le critere du nom d espece et du nom du gene
+ * Paramètres       : Ostream out
+ * Type de retour   : Void
+ *************************************************************************************************************************/
  void ConteneurGenesMap::afficherParEspeceEtNom(ostream& out) const { 
 	 if (!map_.empty())													//on verifie si la map est vide ou non
 	 {
@@ -106,7 +153,13 @@ void ConteneurGenesMap::vider() {
 		 cout << "la map est vide !!" << endl;
  }
 
- //methode qui fait l affichage du contenue de la map suivant la longuer
+ 
+ 
+ /*************************************************************************************************************************
+ * Description      : Methode qui fait l affichage du contenu de la map suivant la longueur
+ * Paramètres       : Ostream out
+ * Type de retour   : Void
+ *************************************************************************************************************************/
  void ConteneurGenesMap::afficherParLongueur(ostream& out) const {
 	 if (!map_.empty())													//on verifie si la map est vide ou non
 	 {
@@ -121,7 +174,15 @@ void ConteneurGenesMap::vider() {
 		 cout << "la map est vide !!" << endl;
  }
 
-//afficher le contenu de la map selon l espece
+ 
+ 
+ 
+
+/*************************************************************************************************************************
+ * Description      : Afficher le contenu de la map selon l espece
+ * Paramètres       : string espece , Ostream out
+ * Type de retour   : Void
+ *************************************************************************************************************************/
  void ConteneurGenesMap::afficherEspece(const string &espece, ostream& out) const {
 	 if (!map_.empty())												//on verifie si la map est vide ou non
 	 {
@@ -134,8 +195,16 @@ void ConteneurGenesMap::vider() {
 	 else
 		 cout << "la map est vide !!" << endl;
  }
+ 
+ 
+ 
 
-//modififer le contenu de la map selon la map<string,string> et l espece donnee
+
+/*************************************************************************************************************************
+ * Description      : Modififer le contenu de la map selon la map<string,string> et l espece donnee
+ * Paramètres       : string , map<string, string>
+ * Type de retour   : int 
+ *************************************************************************************************************************/
 unsigned int ConteneurGenesMap::modifierNoms(const string &espece, const map<string, string> &noms) {
 	int i = 0;
 	if (!map_.empty())																	//on verifie si la map est vide ou non
@@ -155,5 +224,4 @@ unsigned int ConteneurGenesMap::modifierNoms(const string &espece, const map<str
 	return i;
 	
 }
-
 

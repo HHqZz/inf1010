@@ -1,30 +1,64 @@
-#include "conteneurGenesListe.h"
-#include <iostream>
-#include <algorithm>
-#include "Foncteur.h"
+/*********************************************************
+* Titre: Travail pratique #5 - conteneurGenesListe.cpp
+* Date:  04 Avril 2017
+*Auteur : Constantin Bouis 1783438, Hammami Ahmed 1796523
+**********************************************************/
+
+
 #include <iterator>
 #include <functional>
+#include <iostream>
+#include <algorithm>
+
+#include "conteneurGenesListe.h"
+#include "Foncteur.h"
+
+
 using namespace std::placeholders;
 
-//constructeur par defaut
+
+/***********************************************************************************
+ * Description      : Constructeur par defaut
+ * Paramètres       : 
+ * Type de retour   : 
+ **********************************************************************************/
 ConteneurGenesListe::ConteneurGenesListe()
 {
 
 }
 
-//destructeur
+
+
+/***********************************************************************************
+ * Description      : Destructeur qui vide la liste
+ * Paramètres       : 
+ * Type de retour   : 
+ **********************************************************************************/
 ConteneurGenesListe::~ConteneurGenesListe()
 {
 	vider();
 }
 
-//methode qui permet d'inserer un gene dans la liste de la classe COnteneurGeneMap
+
+
+
+/**********************************************************************************************************
+ * Description      : Methode qui permet d'inserer un gene dans la liste de la classe ConteneurGeneMap
+ * Paramètres       : int, string, string, string, string 
+ * Type de retour   : void
+ **********************************************************************************************************/
 void ConteneurGenesListe::inserer(unsigned int id, const string &nom, const string &desc, const string &espece, const string &contenu) {
 	liste_.push_back(new Gene(id, nom, desc, espece, contenu));
 }
 
 
-//Methode qui permet de trouver un gene par son id dans la liste
+
+
+/***********************************************************************************
+ * Description      : Methode qui permet de trouver un gene par son id dans la liste
+ * Paramètres       : int id
+ * Type de retour   : Pointeur de Gene
+ **********************************************************************************/
 Gene* ConteneurGenesListe::trouver(unsigned int id) const {
 	if (!liste_.empty())																		//on verifie si la liste est vide ou non
 	{
@@ -36,7 +70,14 @@ Gene* ConteneurGenesListe::trouver(unsigned int id) const {
 }
 
 
-//Methode qui permet de retirer un gene  qui se trouve dans la liste selon son id
+
+
+
+/*****************************************************************************************************
+ * Description      : Methode qui permet de retirer un gene  qui se trouve dans la liste selon son id
+ * Paramètres       : int id
+ * Type de retour   : Renvoie True si le gene a bien été retiré
+ *****************************************************************************************************/
 bool ConteneurGenesListe::retirer(unsigned int id) {
 	if (!liste_.empty())														//on verifie si la liste est vide ou non
 	{
@@ -52,21 +93,35 @@ bool ConteneurGenesListe::retirer(unsigned int id) {
 
 }
 
-//Methode qui permet de retirer une espece de gene contenue dans la liste et retourne le nbr de gene retire
+
+
+
+/********************************************************************************************************************************
+ * Description      : Methode qui permet de retirer une espece de gene contenue dans la liste et retourne le nbr de gene retire
+ * Paramètres       : string espece
+ * Type de retour   : int = renvoie le nombre d'entité retiré de la liste
+ **********************************************************************************************************************************/
 unsigned int ConteneurGenesListe::retirerEspece(const string &espece) {
 	if (!liste_.empty())														//on verifie si la liste est vide ou non
 	{
 		int i = liste_.size();										//taille de la liste avant le remove
 		liste_.remove_if(DetruireEspece(espece));					// suppression du gene suivant son espece
-		return i - liste_.size();									//taille de la liste avant le remove - la tille de la liste apes le remove donne le nbre d entites retirees de la liste
+		return i - liste_.size();									//taille de la liste avant le remove -  taille de la liste apres le remove = Nb entites retirees de la liste
 	}
 	else
 		return 0;
 }
 
 
-//methode qui permet de vider la liste 
+
+
+/***********************************************************************************
+ * Description      : Methode qui permet de vider la liste 
+ * Paramètres       : 
+ * Type de retour   : void
+ **********************************************************************************/
 void ConteneurGenesListe::vider() {
+
 	if (!liste_.empty())														//on verifie si la liste est vide ou non
 	{
 		for_each(liste_.begin(), liste_.end(), DetruireGenes());
@@ -77,7 +132,13 @@ void ConteneurGenesListe::vider() {
 }
 
 
-//methode pour l affichage de contenu de la liste suivant le critere du nom d espece et du nom du gene
+
+
+/**************************************************************************************************************************
+ * Description      : Methode pour l'affichage de contenu de la liste suivant le critere du nom d espece et du nom du gene
+ * Paramètres       : ostream out
+ * Type de retour   : void
+ ***************************************************************************************************************************/
 void ConteneurGenesListe::afficherParEspeceEtNom(ostream& out) const {
 	if (!liste_.empty())														//on verifie si la liste est vide ou non
 	{
@@ -91,7 +152,13 @@ void ConteneurGenesListe::afficherParEspeceEtNom(ostream& out) const {
 }
 
 
-//methode qui fait l affichage du contenue de la liste suivant la longuer
+
+
+/**************************************************************************************************
+ * Description      : Methode qui fait l'affichage du contenu de la liste suivant la longueur
+ * Paramètres       : ostream out
+ * Type de retour   : void
+ ****************************************************************************************************/
 void ConteneurGenesListe::afficherParLongueur(ostream& out) const {
 	if (!liste_.empty())														//on verifie si la liste est vide ou non
 	{
@@ -105,7 +172,13 @@ void ConteneurGenesListe::afficherParLongueur(ostream& out) const {
 }
 
 
-//afficher le contenu de la liste selon l espece
+
+
+/***********************************************************************************
+ * Description      : Afficher le contenu de la liste selon l'espece
+ * Paramètres       : string espece, ostream out
+ * Type de retour   : void
+ **********************************************************************************/
 void ConteneurGenesListe::afficherEspece(const string &espece, ostream& out) const {
 	if (!liste_.empty())														//on verifie si la liste est vide ou non
 	{
@@ -119,7 +192,13 @@ void ConteneurGenesListe::afficherEspece(const string &espece, ostream& out) con
 }
 
 
-//modififer le contenu de la liste selon la map<string,string> et l espece donnee
+
+
+/***********************************************************************************
+ * Description      : Modififer le contenu de la liste selon la map<string,string> et l'espece donnée
+ * Paramètres       : string espece, map<string,string>
+ * Type de retour   : int = Nombre de noms modifiés dans la liste
+ **********************************************************************************/
 unsigned int ConteneurGenesListe::modifierNoms(const string &espece, const map<string, string> &noms) {
 	Gene* gene;
 	list<Gene*>::iterator itGene = liste_.begin();
@@ -147,3 +226,5 @@ unsigned int ConteneurGenesListe::modifierNoms(const string &espece, const map<s
 	return nombreModifies;
 
 }
+
+
