@@ -222,31 +222,3 @@ unsigned int ConteneurGenesListe::modifierNoms(const string & espece, const map<
 
 	return compteur;
 }
-
-
-		/*Gene* gene;
-		list<Gene*>::iterator itGene = liste_.begin();
-		unsigned int nombreModifies = 0;
-		for (auto it = noms.begin(); it != noms.end();)
-		{
-		itGene = find_if(liste_.begin(), liste_.end(),
-		bind(logical_and<bool>(),
-		bind(MemeNom(new Gene(0,"","",it->first,"")), _1),
-		bind(MemeEspece(new Gene(0,"","",espece,"")), _1)
-		)
-		);
-		if (itGene != liste_.end())
-		{
-		gene = *itGene;
-		gene->setNom(it->second);
-		fill_n(itGene, 1, gene);
-		nombreModifies++;
-		}
-		else
-		{
-		++it;
-		}
-		}
-		return nombreModifies;
-
-		}*/
