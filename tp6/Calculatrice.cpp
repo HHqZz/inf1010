@@ -1,4 +1,8 @@
 #include<QtGui>
+#include<QlineEdit>
+#include<QVBoxLayout>
+#include<QHBoxLayout>
+#include<QGridLayout>
 
 #include<math.h>
 
@@ -37,7 +41,7 @@ Calculatrice::Calculatrice(QWidget *parent): QWidget(parent)
     }
 
     Bouton *pointButton = createButton(tr("."), SLOT(pointCliked()));
-    Bouton *changeSignButton = createButton(tr("\261"), SLOT(changeSignClicked()));
+    Bouton *changeSignButton = createButton(tr("+-"), SLOT(changeSignClicked()));
 
     Bouton *backspaceButton = createButton(tr("Backspace"), SLOT(backspaceClicked()));
     Bouton *clearButton = createButton(tr("Clear"), SLOT(clear()));
@@ -45,47 +49,99 @@ Calculatrice::Calculatrice(QWidget *parent): QWidget(parent)
 	
 	// Créez les boutons manquants ici
 	//...
+    Bouton *MCButton = createButton(tr("MC"), SLOT(clearMemory()));
+    Bouton *MRButton = createButton(tr("MR"), SLOT(readMemory()));
+    Bouton *MSButton = createButton(tr("MS"), SLOT(setMemory()));
+    Bouton *MPlusButton = createButton(tr("M+"), SLOT(addToMemory()));
 
-
-    Bouton *divisionButton = createButton(tr("\367"), SLOT(multiplicativeOperatorClicked()));
-    Bouton *timesButton = createButton(tr("\327"), SLOT(multiplicativeOperatorClicked()));
+    Bouton *divisionButton = createButton(tr("/"), SLOT(multiplicativeOperatorClicked()));
+    Bouton *timesButton = createButton(tr("*"), SLOT(multiplicativeOperatorClicked()));
     Bouton *minusButton = createButton(tr("-"), SLOT(additiveOperatorClicked()));
     Bouton *plusButton = createButton(tr("+"), SLOT(additiveOperatorClicked()));
 
     Bouton *squareRootButton = createButton(tr("Sqrt"), SLOT(unaryOperatorClicked()));
-    Bouton *powerButton = createButton(tr("x\262"), SLOT(unaryOperatorClicked()));
+    Bouton *powerButton = createButton(tr("x^2"), SLOT(unaryOperatorClicked()));
     Bouton *reciprocalButton = createButton(tr("1/x"), SLOT(unaryOperatorClicked()));
     Bouton *equalButton = createButton(tr("="), SLOT(equalClicked()));
 
 		//Déclarez votre layout ici
 		//...
-		
+        QVBoxLayout* mainLayout = new QVBoxLayout;
+        QVBoxLayout* layout1 = new QVBoxLayout;
+        QHBoxLayout* layout2 = new QHBoxLayout;
+        QGridLayout* layout3 = new QGridLayout;
 		//Gerer le positionnement des boutons sur le layout ici
 		//...
-		
+        layout1->addWidget(display);
+
+        layout2->addWidget(backspaceButton);
+        layout2->addWidget(clearButton);
+        layout2->addWidget(clearAllButton);
+
+        layout3->addWidget(MCButton,0,0);
+        layout3->addWidget(digitButtons[7],0,1);
+        layout3->addWidget(digitButtons[8],0,2);
+        layout3->addWidget(digitButtons[9],0,3);
+        layout3->addWidget(divisionButton,0,4);
+        layout3->addWidget(squareRootButton,0,5);
+        layout3->addWidget(MRButton,1,0);
+        layout3->addWidget(digitButtons[4],1,1);
+        layout3->addWidget(digitButtons[5],1,2);
+        layout3->addWidget(digitButtons[6],1,3);
+        layout3->addWidget(timesButton,1,4);
+        layout3->addWidget(powerButton,1,5);
+        layout3->addWidget(MSButton,2,0);
+        layout3->addWidget(digitButtons[1],2,1);
+        layout3->addWidget(digitButtons[2],2,2);
+        layout3->addWidget(digitButtons[3],2,3);
+        layout3->addWidget(minusButton,2,4);
+        layout3->addWidget(reciprocalButton,2,5);
+        layout3->addWidget(MPlusButton,3,0);
+        layout3->addWidget(digitButtons[0],3,1);
+        layout3->addWidget(pointButton,3,2);
+        layout3->addWidget(changeSignButton,3,3);
+        layout3->addWidget(plusButton,3,4);
+        layout3->addWidget(equalButton,3,5);
+
+        mainLayout->addLayout(layout1);
+        mainLayout->addLayout(layout2);
+        mainLayout->addLayout(layout3);
 		// Ajout du layout à la fenetre principale
-		setLayout(mainLayout);
+        setLayout(mainLayout);
 		// Ajout du titre de la  fenetre
         setWindowTitle(tr("Calculatrice"));
 }
 
+/********************************************************************************
+ * Description      : afficher le contenu du bouton appuié
+ * Paramètres       : Aucun
+ * Type de retour   : void
+ *******************************************************************************/
 void Calculatrice::digitClicked()
 {
     Bouton *clickedButton = qobject_cast<Bouton* >(sender());
     int digitValue = clickedButton->text().toInt();
-    if(display->text() =="0" && digitValue == 0.0)
+    if(display->text() =="0" && digitValue == 0.0) /* si le contenu du bouton appuié est 0 , et le text
+                                                   déjà affiché est 0 , on fait rien */
         return;
 
 
-    if(waitingForOperand)
+    if(waitingForOperand)   // si l'utilisaruer clique sur un opérande, on affiche 0
     {
         display->clear();
         waitingForOperand = false;
     }
-    display->setText(display->text() + QString::number(digitValue));
+    display->setText(display->text() + QString::number(digitValue)); /* on affiche le text qui était avant avec le
+                                                                     contenu du bouton appuié */
 
 }
 
+/********************************************************************************
+ * Description      : calcule et affiche le resultat de l'operation choisie entre
+ 1/x , racine(x)et carré(x)
+ * Paramètres       : Aucun
+ * Type de retour   : void
+ *******************************************************************************/
 void Calculatrice::unaryOperatorClicked()
 {
     Bouton* clickedButton = qobject_cast<Bouton*>(sender());
@@ -93,16 +149,16 @@ void Calculatrice::unaryOperatorClicked()
     double operand = display->text().toDouble();
     double result = 0.0;
 
-    if(clickedOperator == tr("Sqrt"))
+    if(clickedOperator == tr("Sqrt")) // si le bouton cliqué est 'sqrt'
     {
             if(operand < 0.0)
             {
-                abortOperation();
+                abortOperation();    // on ne fait pas la racine d'un nombre négatif
                 return;
             }
         result = sqrt(operand);
     }
-    else if(clickedOperator == tr("x\262"))
+    else if(clickedOperator == tr("x^2"))
     {
         result = pow(operand, 2.0);
     }
@@ -110,15 +166,20 @@ void Calculatrice::unaryOperatorClicked()
     {
             if(operand == 0.0)
             {
-               abortOperation();
+               abortOperation();      // on ne fait pas l'opération si l'opérand est égal à 0
               return;
             }
              result = 1.0 / operand;
     }
-    display->setText(QString::number(result));
-    waitingForOperand = true;
+    display->setText(QString::number(result));     // on affiche le résultat
+    waitingForOperand = true;                       // on se met en atente pour nouvelle entrée d'opérande
 }
 
+/********************************************************************************
+ * Description      : reconnaitre l'opérateur '+' et place
+ * Paramètres       : Aucun
+ * Type de retour   : void
+ *******************************************************************************/
 void Calculatrice::additiveOperatorClicked()
 {
     Bouton* clickedButton = qobject_cast<Bouton*>(sender());
@@ -179,6 +240,11 @@ void Calculatrice::equalClicked()
     waitingForOperand = true;
 }
 
+/********************************************************************************
+ * Description      :
+ * Paramètres       : Aucun
+ * Type de retour   : void
+ *******************************************************************************/
 void Calculatrice::pointClicked()
 {
     if(waitingForOperand)
@@ -294,11 +360,11 @@ bool Calculatrice::calculate(double rightOperand, const QString &pendingOperator
     {
         sumSoFar -= rightOperand;
     }
-    else if(pendingOperator == tr("\327"))
+    else if(pendingOperator == tr("*"))
     {
         factorSoFar *= rightOperand;
     }
-    else if(pendingOperator == tr("\367"))
+    else if(pendingOperator == tr("/"))
     {
         try
         {
