@@ -213,7 +213,7 @@ unsigned int ConteneurGenesMap::modifierNoms(const string &espece, const map<str
 		{
 			for (auto it1 = noms.begin(); it1 != noms.end(); ++it1)
 			{
-				if (it1->first == it->second->getNom())
+				if (it1->first == it->second->getNom() && espece == it ->second->getEspece())
 				{
 					it->second->setNom(it1->second);
 					i++;
