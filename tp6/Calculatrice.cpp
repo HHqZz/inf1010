@@ -151,12 +151,21 @@ void Calculatrice::unaryOperatorClicked()
 
     if(clickedOperator == tr("Sqrt")) // si le bouton cliqué est 'sqrt'
     {
+        try
+        {
             if(operand < 0.0)
             {
                 abortOperation();    // on ne fait pas la racine d'un nombre négatif
-                return;
+                throw InvalidValueException("Exception racine carre negative impossible !");
             }
-        result = sqrt(operand);
+             result = sqrt(operand);
+        }
+        catch (InvalidValueException& e)
+        {
+            QMessageBox messageBox;
+            messageBox.critical(0,"error",e.what());
+            return;
+        }
     }
     else if(clickedOperator == tr("x^2"))
     {
@@ -164,12 +173,22 @@ void Calculatrice::unaryOperatorClicked()
     }
     else if(clickedOperator == tr("1/x"))
     {
+        try
+        {
             if(operand == 0.0)
             {
                abortOperation();      // on ne fait pas l'opération si l'opérand est égal à 0
-              return;
+              throw InvalidValueException("Exception inverse de 0 impossible !");
             }
              result = 1.0 / operand;
+        }
+        catch (InvalidValueException& e)
+        {
+            QMessageBox messageBox;
+            messageBox.critical(0,"error",e.what());
+            return;
+        }
+
     }
     display->setText(QString::number(result));     // on affiche le résultat
     waitingForOperand = true;                       // on se met en atente pour nouvelle entrée d'opérande
@@ -371,13 +390,15 @@ bool Calculatrice::calculate(double rightOperand, const QString &pendingOperator
             if (rightOperand == 0.0)
             {
                 abortOperation();
-                 return false;
+                throw InvalidValueException("Exception division par 0 impossible !");
             }
         factorSoFar /= rightOperand;
         }
-        catch(std::exception const& e)
+        catch(InvalidValueException& e)
         {
-            QMessageBox::critical(this, "Error", e.what());
+            QMessageBox messageBox;
+            messageBox.critical(0,"error",e.what());
+            return false;
         }
     }
     return true;
