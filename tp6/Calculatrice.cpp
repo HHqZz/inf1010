@@ -1,14 +1,21 @@
-#include<QtGui>
-#include<QlineEdit>
-#include<QVBoxLayout>
-#include<QHBoxLayout>
-#include<QGridLayout>
+/*********************************************************
+* Titre: Travail pratique #6 - Calculatrice.cpp
+* Date:  19 Avril 2017
+*Auteur : Constantin Bouis 1783438, Hammami Ahmed 1796523
+**********************************************************/
 
-#include<math.h>
 
-#include"Bouton.h"
-#include"Calculatrice.h"
-#include"Erreur.h"
+#include <QtGui>
+#include <QlineEdit>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QGridLayout>
+
+#include <math.h>
+
+#include "Bouton.h"
+#include "Calculatrice.h"
+#include "Erreur.h"
 
 Calculatrice::Calculatrice(QWidget *parent): QWidget(parent)
 {
@@ -20,13 +27,13 @@ Calculatrice::Calculatrice(QWidget *parent): QWidget(parent)
 	//creation d'un objet de type QLineEdit avec par défaut la chaine de caractère 0
 	//cette objet représente une zone de texte qui sera utilisé comme afficheur de la calculatrice
     display = new QLineEdit("0");
-	
+
 	// la zone de texte est paramétrée en lecture seule
     display->setReadOnly(true);
-	
+
 	// l'affichage se fera de la droite vers la gauche
     display->setAlignment(Qt::AlignRight);
-	
+
 	// définition de la largeur de la zone de texte à 15
     display->setMaxLength(15);
 
@@ -46,14 +53,16 @@ Calculatrice::Calculatrice(QWidget *parent): QWidget(parent)
     Bouton *backspaceButton = createButton(tr("Backspace"), SLOT(backspaceClicked()));
     Bouton *clearButton = createButton(tr("Clear"), SLOT(clear()));
     Bouton *clearAllButton = createButton(tr("Clear All"), SLOT(clearAll()));
-	
+
 	// Créez les boutons manquants ici
-	//...
+
+    // Ajouts boutons memoire
     Bouton *MCButton = createButton(tr("MC"), SLOT(clearMemory()));
     Bouton *MRButton = createButton(tr("MR"), SLOT(readMemory()));
     Bouton *MSButton = createButton(tr("MS"), SLOT(setMemory()));
     Bouton *MPlusButton = createButton(tr("M+"), SLOT(addToMemory()));
 
+    // Ajouts boutons du signe de loperation
     Bouton *divisionButton = createButton(tr("/"), SLOT(multiplicativeOperatorClicked()));
     Bouton *timesButton = createButton(tr("*"), SLOT(multiplicativeOperatorClicked()));
     Bouton *minusButton = createButton(tr("-"), SLOT(additiveOperatorClicked()));
@@ -65,19 +74,20 @@ Calculatrice::Calculatrice(QWidget *parent): QWidget(parent)
     Bouton *equalButton = createButton(tr("="), SLOT(equalClicked()));
 
 		//Déclarez votre layout ici
-		//...
-        QVBoxLayout* mainLayout = new QVBoxLayout;
-        QVBoxLayout* layout1 = new QVBoxLayout;
-        QHBoxLayout* layout2 = new QHBoxLayout;
-        QGridLayout* layout3 = new QGridLayout;
+        QVBoxLayout* mainLayout = new QVBoxLayout;  // Layout principale
+        QVBoxLayout* layout1 = new QVBoxLayout;     // Layout text editor
+        QHBoxLayout* layout2 = new QHBoxLayout;     // Layout des boutons clear et backspace
+        QGridLayout* layout3 = new QGridLayout;     // Layout de la grille de bouton
 		//Gerer le positionnement des boutons sur le layout ici
-		//...
+// layout
         layout1->addWidget(display);
 
+// layout Clear et backSpace bouton
         layout2->addWidget(backspaceButton);
         layout2->addWidget(clearButton);
         layout2->addWidget(clearAllButton);
 
+// layout grille
         layout3->addWidget(MCButton,0,0);
         layout3->addWidget(digitButtons[7],0,1);
         layout3->addWidget(digitButtons[8],0,2);
@@ -102,12 +112,16 @@ Calculatrice::Calculatrice(QWidget *parent): QWidget(parent)
         layout3->addWidget(changeSignButton,3,3);
         layout3->addWidget(plusButton,3,4);
         layout3->addWidget(equalButton,3,5);
+/******** FIN GRILLE *******************/
 
+    // On ajoute les sous layout dans le mainLayout
         mainLayout->addLayout(layout1);
         mainLayout->addLayout(layout2);
         mainLayout->addLayout(layout3);
+
 		// Ajout du layout à la fenetre principale
         setLayout(mainLayout);
+
 		// Ajout du titre de la  fenetre
         setWindowTitle(tr("Calculatrice"));
 }
@@ -194,42 +208,55 @@ void Calculatrice::unaryOperatorClicked()
     waitingForOperand = true;                       // on se met en atente pour nouvelle entrée d'opérande
 }
 
-/********************************************************************************
- * Description      : reconnaitre l'opérateur '+' et place
+/**********************************************************************************************
+ * Description      : reconnait l'opérateur '+' et "-"
  * Paramètres       : Aucun
  * Type de retour   : void
- *******************************************************************************/
+ **********************************************************************************************/
 void Calculatrice::additiveOperatorClicked()
 {
     Bouton* clickedButton = qobject_cast<Bouton*>(sender());
     QString clickedOperator = clickedButton->text();
     double operand = display->text().toDouble();
 
-    sumSoFar = operand;
+    sumSoFar = operand;      // On stocke la valeur actuelle en memoire
 
-    pendingAdditiveOperator = clickedOperator;
+    pendingAdditiveOperator = clickedOperator; // pendingAdditiveOperator prend + ou -
 
-    waitingForOperand = true;
+    waitingForOperand = true; //  Flag de loperation en attente true
 }
 
+
+
+/********************************************************************************
+ * Description      : Reconnait lorsque l on selectionne multiplie ou diviser
+ * Paramètres       : Aucun
+ * Type de retour   : void
+ *******************************************************************************/
 void Calculatrice:: multiplicativeOperatorClicked()
 {
     Bouton* clickedButton = qobject_cast<Bouton*>(sender());
     QString clickedOperator = clickedButton->text();
     double operand = display->text().toDouble();
 
-    factorSoFar = operand;
+    factorSoFar = operand; // Stocke la valeur actuelle en memoire
 
-    pendingMultiplicativeOperator = clickedOperator;
+    pendingMultiplicativeOperator = clickedOperator;  // Loperation en attente devient loperateur clique : multiplier ou diviser
 
-    waitingForOperand = true;
+    waitingForOperand = true; //  Flag de loperation en attente true
 }
 
+
+/********************************************************************************
+ * Description      : Reconnait la touche "=" et affiche le resultat
+ * Paramètres       : Aucun
+ * Type de retour   : void
+ *******************************************************************************/
 void Calculatrice::equalClicked()
 {
-    double operand = display->text().toDouble();
+    double operand = display->text().toDouble();  // Convertit le texte affiche en double et le stocke dans operand
 
-    if(!pendingMultiplicativeOperator.isEmpty())
+    if(!pendingMultiplicativeOperator.isEmpty())  // S il y a une multiplication en attente
     {
         if(!calculate(operand, pendingMultiplicativeOperator))
         {
@@ -254,21 +281,23 @@ void Calculatrice::equalClicked()
         sumSoFar = operand;
     }
 
-    display->setText(QString::number(sumSoFar));
+    display->setText(QString::number(sumSoFar)); // Affichage
     sumSoFar = 0.0;
     waitingForOperand = true;
 }
 
-/********************************************************************************
- * Description      :
+
+
+/******************************************************************************************************
+ * Description      : Reconnait si il y a un "." dans laffichage et affiche le texte suivit d'un point
  * Paramètres       : Aucun
  * Type de retour   : void
- *******************************************************************************/
+ *****************************************************************************************************/
 void Calculatrice::pointClicked()
 {
     if(waitingForOperand)
     {
-        display->setText("0");
+        display->setText("0");    // Ne fait rien si on est toujours en attente d'un operand
     }
     if(!display->text().contains("."))
     {
@@ -277,113 +306,178 @@ void Calculatrice::pointClicked()
     waitingForOperand = false;
 }
 
+
+
+/********************************************************************************
+ * Description      : Change le signe du texte affiche
+ * Paramètres       : Aucun
+ * Type de retour   : void
+ *******************************************************************************/
 void Calculatrice::changeSignClicked()
 {
-    QString text = display->text();
-    double value = text.toDouble();
+    QString text = display->text(); // recupere le texte affiche a lecran en string
+    double value = text.toDouble(); // stocke le texte en double
 
     if(value > 0.0)
     {
-        text.prepend(tr("-"));
+        text.prepend(tr("-"));  // Ajoute un "-" devant le texte si cest une valeur positive
     }
     else if(value < 0.0)
     {
-        text.remove(0, 1);
+        text.remove(0, 1);    // Remove le signe si cest une valeur negative
     }
-    display->setText(text);
+    display->setText(text);   // Affiche le texte avec le nouveau signe
 }
 
+
+/********************************************************************************
+ * Description      : Permet de retirer le dernier element du texte
+ * Paramètres       : Aucun
+ * Type de retour   : void
+ *******************************************************************************/
 void Calculatrice::backspaceClicked()
 {
     if(waitingForOperand)
-        return;
+        return;                     // Quitte la fonction si on est en attente dun operand
 
-    QString text = display->text();
-    text.chop(1);
+    QString text = display->text(); // Recupere le texte affiche en string
+    text.chop(1);                   // Enleve le premier element du texte
     if(text.isEmpty())
     {
         text = "0";
-        waitingForOperand = true;
+        waitingForOperand = true;     // Affiche 0 si le texte est maintenant vide
     }
-    display->setText(text);
+    display->setText(text);           // Affiche le novueau texte
 }
 
+
+/********************************************************************************
+ * Description      : Permet de vider laffichage = Affiche "0"
+ * Paramètres       : Aucun
+ * Type de retour   : void
+ *******************************************************************************/
 void Calculatrice::clear()
 {
     if(waitingForOperand)
-        return;
+        return;                 // Quitte la fonction si on est en attente dun operand
 
-    display->setText("0");
-    waitingForOperand = true;
+    display->setText("0");      // Affiche 0 = clear
+    waitingForOperand = true;   // Se met en attente dun operand
 }
+
+
 
 /********************************************************************************
  * Description      : Réinitialise toutes les valeurs et toutes les opérations
  * Paramètres       : Aucun
  * Type de retour   : void
- *******************************************************************************/ 
+ *******************************************************************************/
 void Calculatrice::clearAll()
 {
-    sumSoFar = 0.0;
-    factorSoFar = 0.0;
-    pendingAdditiveOperator.clear();
-    pendingMultiplicativeOperator.clear();
-    display->setText("0");
+    sumSoFar = 0.0;               // Reinitialise la valeur de sumSoFar
+    factorSoFar = 0.0;            // Reinitialise la valeur de factorSoFar
+    pendingAdditiveOperator.clear();    // Reinitialise l'etat de pendingAdditiveOperator
+    pendingMultiplicativeOperator.clear();    // Reinitialise l'etat de pendingMultiplicativeOperator
+    display->setText("0");      // Affiche 0
     waitingForOperand = true;
 
 }
 
+
+/********************************************************************************
+ * Description      : Vide toutes les valeurs en memoire
+ * Paramètres       : Aucun
+ * Type de retour   : void
+ *******************************************************************************/
 void Calculatrice::clearMemory()
 {
-    sumInMemory = 0.0;
+    sumInMemory = 0.0;   // Reinitialise la valeur dans la memoire = 0
 }
 
+
+/********************************************************************************
+ * Description      : Affiche le contenu de la memoire
+ * Paramètres       : Aucun
+ * Type de retour   : void
+ *******************************************************************************/
 void Calculatrice::readMemory()
 {
-    display->setText(QString::number(sumInMemory));
-    waitingForOperand = true;
+    display->setText(QString::number(sumInMemory));   // Affiche la valeur contenu dans la memoire
+    waitingForOperand = true;   // Passe en attente dun operand
 }
 
+
+/*****************************************************************************************************
+ * Description      : Stocke dans la memoire la valeur affichee a lecran (apres avoir appuye sur "=")
+ * Paramètres       : Aucun
+ * Type de retour   : void
+ *****************************************************************************************************/
 void Calculatrice::setMemory()
 {
     equalClicked();
-    sumInMemory = display->text().toDouble();
+    sumInMemory = display->text().toDouble();   // Convertit le texte en double et le stocke dans la memoire
 }
 
+
+/***************************************************************************************
+ * Description      : Fait la somme entre le contenu de la memoire et le texte a lecran
+ * Paramètres       : Aucun
+ * Type de retour   : void
+ **************************************************************************************/
 void Calculatrice::addToMemory()
 {
     equalClicked();
-    sumInMemory += display->text().toDouble();
+    sumInMemory += display->text().toDouble();    // Fais la somme entre le contenu de la memoire et le texte affiche
 }
 
+
+/*******************************************************************************************
+ * Description      : Permet de creer un nouveau bouton en lui assignant un signal(connect)
+ * Paramètres       : String&, char*
+ * Type de retour   : Pointeur de type Bouton
+ ******************************************************************************************/
 Bouton *Calculatrice::createButton(const QString &text, const char *member)
 {
-    Bouton *button = new Bouton(text);
-    connect(button, SIGNAL(clicked()), this, member);
+    Bouton *button = new Bouton(text);        // Cree un bouton
+    connect(button, SIGNAL(clicked()), this, member);   // Connect le bouton cree au signal
     return button;
 }
 
+
+
+/***************************************************************************************
+ * Description      : Permet d'annuler une operation, vide laffichage
+ * Paramètres       : Aucun
+ * Type de retour   : void
+ **************************************************************************************/
 void Calculatrice::abortOperation()
 {
-    clearAll();
-    return;
+    clearAll();   // Vide l'affichage
+    return;     // Quitte la fonction sans rien faire de plus
 }
 
+
+
+/***************************************************************************************
+ * Description      : Permet de faire le calcul de loperation suivant son operand
+ * Paramètres       : Double, Qstring
+ * Type de retour   :  Bool = Renvoie true si loperation sest effectuee sans erreur
+ **************************************************************************************/
 bool Calculatrice::calculate(double rightOperand, const QString &pendingOperator)
 {
-    if(pendingOperator == tr("+"))
+    if(pendingOperator == tr("+"))      // Reconnait loeprateur +
     {
-        sumSoFar +=rightOperand;
+        sumSoFar +=rightOperand;    // Fait une somme
     }
-    else if(pendingOperator == tr("-"))
+    else if(pendingOperator == tr("-")) // Reconnait loeprateur -
     {
-        sumSoFar -= rightOperand;
+        sumSoFar -= rightOperand;     // Fait une difference
     }
-    else if(pendingOperator == tr("*"))
+    else if(pendingOperator == tr("*")) // Reconnait loperateur +
     {
         factorSoFar *= rightOperand;
     }
-    else if(pendingOperator == tr("/"))
+    else if(pendingOperator == tr("/"))   // Reconnait loperateur de division
     {
         try
         {
@@ -404,6 +498,3 @@ bool Calculatrice::calculate(double rightOperand, const QString &pendingOperator
     return true;
 
 }
-
-
-
