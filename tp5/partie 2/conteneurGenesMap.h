@@ -8,7 +8,7 @@
 #ifndef _CONTENEUR_GENES_MAP_H_
 #define _CONTENEUR_GENES_MAP_H_
 
-#include "ConteneurGenes.H"
+#include "ConteneurGenes.h"
 using namespace std;
 
 class ConteneurGenesMap : public ConteneurGenes
@@ -36,5 +36,3 @@ private :
 };
 
 #endif // _CONTENEUR_GENES_MAP_H_
-
-

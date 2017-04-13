@@ -24,7 +24,7 @@ public:
 
 	virtual bool retirer(unsigned int id) = 0;
 	virtual unsigned int retirerEspece(const string &espece) = 0;
-	virtual void vider() = 0; 
+	virtual void vider() = 0;
 
 	virtual void afficherParEspeceEtNom(ostream& out) const = 0;
 	virtual void afficherParLongueur(ostream& out) const = 0;

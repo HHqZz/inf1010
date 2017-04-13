@@ -6,7 +6,7 @@
 
 
 #include <QtGui>
-#include <QlineEdit>
+#include <QLineEdit>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGridLayout>
@@ -24,17 +24,17 @@ Calculatrice::Calculatrice(QWidget *parent): QWidget(parent)
     sumSoFar = 0.0;
     factorSoFar = 0.0;
     waitingForOperand = true;
-	//creation d'un objet de type QLineEdit avec par défaut la chaine de caractère 0
-	//cette objet représente une zone de texte qui sera utilisé comme afficheur de la calculatrice
+	//creation d'un objet de type QLineEdit avec par dï¿½faut la chaine de caractï¿½re 0
+	//cette objet reprï¿½sente une zone de texte qui sera utilisï¿½ comme afficheur de la calculatrice
     display = new QLineEdit("0");
 
-	// la zone de texte est paramétrée en lecture seule
+	// la zone de texte est paramï¿½trï¿½e en lecture seule
     display->setReadOnly(true);
 
 	// l'affichage se fera de la droite vers la gauche
     display->setAlignment(Qt::AlignRight);
 
-	// définition de la largeur de la zone de texte à 15
+	// dï¿½finition de la largeur de la zone de texte ï¿½ 15
     display->setMaxLength(15);
 
     QFont font = display->font();
@@ -54,7 +54,7 @@ Calculatrice::Calculatrice(QWidget *parent): QWidget(parent)
     Bouton *clearButton = createButton(tr("Clear"), SLOT(clear()));
     Bouton *clearAllButton = createButton(tr("Clear All"), SLOT(clearAll()));
 
-	// Créez les boutons manquants ici
+	// Crï¿½ez les boutons manquants ici
 
     // Ajouts boutons memoire
     Bouton *MCButton = createButton(tr("MC"), SLOT(clearMemory()));
@@ -73,7 +73,7 @@ Calculatrice::Calculatrice(QWidget *parent): QWidget(parent)
     Bouton *reciprocalButton = createButton(tr("1/x"), SLOT(unaryOperatorClicked()));
     Bouton *equalButton = createButton(tr("="), SLOT(equalClicked()));
 
-		//Déclarez votre layout ici
+		//Dï¿½clarez votre layout ici
         QVBoxLayout* mainLayout = new QVBoxLayout;  // Layout principale
         QVBoxLayout* layout1 = new QVBoxLayout;     // Layout text editor
         QHBoxLayout* layout2 = new QHBoxLayout;     // Layout des boutons clear et backspace
@@ -119,7 +119,7 @@ Calculatrice::Calculatrice(QWidget *parent): QWidget(parent)
         mainLayout->addLayout(layout2);
         mainLayout->addLayout(layout3);
 
-		// Ajout du layout à la fenetre principale
+		// Ajout du layout ï¿½ la fenetre principale
         setLayout(mainLayout);
 
 		// Ajout du titre de la  fenetre
@@ -127,33 +127,33 @@ Calculatrice::Calculatrice(QWidget *parent): QWidget(parent)
 }
 
 /********************************************************************************
- * Description      : afficher le contenu du bouton appuié
- * Paramètres       : Aucun
+ * Description      : afficher le contenu du bouton appuiï¿½
+ * Paramï¿½tres       : Aucun
  * Type de retour   : void
  *******************************************************************************/
 void Calculatrice::digitClicked()
 {
     Bouton *clickedButton = qobject_cast<Bouton* >(sender());
     int digitValue = clickedButton->text().toInt();
-    if(display->text() =="0" && digitValue == 0.0) /* si le contenu du bouton appuié est 0 , et le text
-                                                   déjà affiché est 0 , on fait rien */
+    if(display->text() =="0" && digitValue == 0.0) /* si le contenu du bouton appuiï¿½ est 0 , et le text
+                                                   dï¿½jï¿½ affichï¿½ est 0 , on fait rien */
         return;
 
 
-    if(waitingForOperand)   // si l'utilisaruer clique sur un opérande, on affiche 0
+    if(waitingForOperand)   // si l'utilisaruer clique sur un opï¿½rande, on affiche 0
     {
         display->clear();
         waitingForOperand = false;
     }
-    display->setText(display->text() + QString::number(digitValue)); /* on affiche le text qui était avant avec le
-                                                                     contenu du bouton appuié */
+    display->setText(display->text() + QString::number(digitValue)); /* on affiche le text qui ï¿½tait avant avec le
+                                                                     contenu du bouton appuiï¿½ */
 
 }
 
 /********************************************************************************
  * Description      : calcule et affiche le resultat de l'operation choisie entre
- 1/x , racine(x)et carré(x)
- * Paramètres       : Aucun
+ 1/x , racine(x)et carrï¿½(x)
+ * Paramï¿½tres       : Aucun
  * Type de retour   : void
  *******************************************************************************/
 void Calculatrice::unaryOperatorClicked()
@@ -163,13 +163,13 @@ void Calculatrice::unaryOperatorClicked()
     double operand = display->text().toDouble();
     double result = 0.0;
 
-    if(clickedOperator == tr("Sqrt")) // si le bouton cliqué est 'sqrt'
+    if(clickedOperator == tr("Sqrt")) // si le bouton cliquï¿½ est 'sqrt'
     {
         try
         {
             if(operand < 0.0)
             {
-                abortOperation();    // on ne fait pas la racine d'un nombre négatif
+                abortOperation();    // on ne fait pas la racine d'un nombre nï¿½gatif
                 throw InvalidValueException("Exception racine carre negative impossible !");
             }
              result = sqrt(operand);
@@ -191,7 +191,7 @@ void Calculatrice::unaryOperatorClicked()
         {
             if(operand == 0.0)
             {
-               abortOperation();      // on ne fait pas l'opération si l'opérand est égal à 0
+               abortOperation();      // on ne fait pas l'opï¿½ration si l'opï¿½rand est ï¿½gal ï¿½ 0
               throw InvalidValueException("Exception inverse de 0 impossible !");
             }
              result = 1.0 / operand;
@@ -204,13 +204,13 @@ void Calculatrice::unaryOperatorClicked()
         }
 
     }
-    display->setText(QString::number(result));     // on affiche le résultat
-    waitingForOperand = true;                       // on se met en atente pour nouvelle entrée d'opérande
+    display->setText(QString::number(result));     // on affiche le rï¿½sultat
+    waitingForOperand = true;                       // on se met en atente pour nouvelle entrï¿½e d'opï¿½rande
 }
 
 /**********************************************************************************************
- * Description      : reconnait l'opérateur '+' et "-"
- * Paramètres       : Aucun
+ * Description      : reconnait l'opï¿½rateur '+' et "-"
+ * Paramï¿½tres       : Aucun
  * Type de retour   : void
  **********************************************************************************************/
 void Calculatrice::additiveOperatorClicked()
@@ -230,7 +230,7 @@ void Calculatrice::additiveOperatorClicked()
 
 /********************************************************************************
  * Description      : Reconnait lorsque l on selectionne multiplie ou diviser
- * Paramètres       : Aucun
+ * Paramï¿½tres       : Aucun
  * Type de retour   : void
  *******************************************************************************/
 void Calculatrice:: multiplicativeOperatorClicked()
@@ -249,7 +249,7 @@ void Calculatrice:: multiplicativeOperatorClicked()
 
 /********************************************************************************
  * Description      : Reconnait la touche "=" et affiche le resultat
- * Paramètres       : Aucun
+ * Paramï¿½tres       : Aucun
  * Type de retour   : void
  *******************************************************************************/
 void Calculatrice::equalClicked()
@@ -290,7 +290,7 @@ void Calculatrice::equalClicked()
 
 /******************************************************************************************************
  * Description      : Reconnait si il y a un "." dans laffichage et affiche le texte suivit d'un point
- * Paramètres       : Aucun
+ * Paramï¿½tres       : Aucun
  * Type de retour   : void
  *****************************************************************************************************/
 void Calculatrice::pointClicked()
@@ -310,7 +310,7 @@ void Calculatrice::pointClicked()
 
 /********************************************************************************
  * Description      : Change le signe du texte affiche
- * Paramètres       : Aucun
+ * Paramï¿½tres       : Aucun
  * Type de retour   : void
  *******************************************************************************/
 void Calculatrice::changeSignClicked()
@@ -332,7 +332,7 @@ void Calculatrice::changeSignClicked()
 
 /********************************************************************************
  * Description      : Permet de retirer le dernier element du texte
- * Paramètres       : Aucun
+ * Paramï¿½tres       : Aucun
  * Type de retour   : void
  *******************************************************************************/
 void Calculatrice::backspaceClicked()
@@ -353,7 +353,7 @@ void Calculatrice::backspaceClicked()
 
 /********************************************************************************
  * Description      : Permet de vider laffichage = Affiche "0"
- * Paramètres       : Aucun
+ * Paramï¿½tres       : Aucun
  * Type de retour   : void
  *******************************************************************************/
 void Calculatrice::clear()
@@ -368,8 +368,8 @@ void Calculatrice::clear()
 
 
 /********************************************************************************
- * Description      : Réinitialise toutes les valeurs et toutes les opérations
- * Paramètres       : Aucun
+ * Description      : Rï¿½initialise toutes les valeurs et toutes les opï¿½rations
+ * Paramï¿½tres       : Aucun
  * Type de retour   : void
  *******************************************************************************/
 void Calculatrice::clearAll()
@@ -386,7 +386,7 @@ void Calculatrice::clearAll()
 
 /********************************************************************************
  * Description      : Vide toutes les valeurs en memoire
- * Paramètres       : Aucun
+ * Paramï¿½tres       : Aucun
  * Type de retour   : void
  *******************************************************************************/
 void Calculatrice::clearMemory()
@@ -397,7 +397,7 @@ void Calculatrice::clearMemory()
 
 /********************************************************************************
  * Description      : Affiche le contenu de la memoire
- * Paramètres       : Aucun
+ * Paramï¿½tres       : Aucun
  * Type de retour   : void
  *******************************************************************************/
 void Calculatrice::readMemory()
@@ -409,7 +409,7 @@ void Calculatrice::readMemory()
 
 /*****************************************************************************************************
  * Description      : Stocke dans la memoire la valeur affichee a lecran (apres avoir appuye sur "=")
- * Paramètres       : Aucun
+ * Paramï¿½tres       : Aucun
  * Type de retour   : void
  *****************************************************************************************************/
 void Calculatrice::setMemory()
@@ -421,7 +421,7 @@ void Calculatrice::setMemory()
 
 /***************************************************************************************
  * Description      : Fait la somme entre le contenu de la memoire et le texte a lecran
- * Paramètres       : Aucun
+ * Paramï¿½tres       : Aucun
  * Type de retour   : void
  **************************************************************************************/
 void Calculatrice::addToMemory()
@@ -433,7 +433,7 @@ void Calculatrice::addToMemory()
 
 /*******************************************************************************************
  * Description      : Permet de creer un nouveau bouton en lui assignant un signal(connect)
- * Paramètres       : String&, char*
+ * Paramï¿½tres       : String&, char*
  * Type de retour   : Pointeur de type Bouton
  ******************************************************************************************/
 Bouton *Calculatrice::createButton(const QString &text, const char *member)
@@ -447,7 +447,7 @@ Bouton *Calculatrice::createButton(const QString &text, const char *member)
 
 /***************************************************************************************
  * Description      : Permet d'annuler une operation, vide laffichage
- * Paramètres       : Aucun
+ * Paramï¿½tres       : Aucun
  * Type de retour   : void
  **************************************************************************************/
 void Calculatrice::abortOperation()
@@ -460,7 +460,7 @@ void Calculatrice::abortOperation()
 
 /***************************************************************************************
  * Description      : Permet de faire le calcul de loperation suivant son operand
- * Paramètres       : Double, Qstring
+ * Paramï¿½tres       : Double, Qstring
  * Type de retour   :  Bool = Renvoie true si loperation sest effectuee sans erreur
  **************************************************************************************/
 bool Calculatrice::calculate(double rightOperand, const QString &pendingOperator)

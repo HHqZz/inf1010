@@ -19,8 +19,8 @@ using namespace std::placeholders;
 
 /***********************************************************************************
  * Description      : Constructeur par defaut
- * Paramètres       : 
- * Type de retour   : 
+ * Paramètres       :
+ * Type de retour   :
  **********************************************************************************/
 ConteneurGenesListe::ConteneurGenesListe()
 {
@@ -31,8 +31,8 @@ ConteneurGenesListe::ConteneurGenesListe()
 
 /***********************************************************************************
  * Description      : Destructeur qui vide la liste
- * Paramètres       : 
- * Type de retour   : 
+ * Paramètres       :
+ * Type de retour   :
  **********************************************************************************/
 ConteneurGenesListe::~ConteneurGenesListe()
 {
@@ -44,7 +44,7 @@ ConteneurGenesListe::~ConteneurGenesListe()
 
 /**********************************************************************************************************
  * Description      : Methode qui permet d'inserer un gene dans la liste de la classe ConteneurGeneMap
- * Paramètres       : int, string, string, string, string 
+ * Paramètres       : int, string, string, string, string
  * Type de retour   : void
  **********************************************************************************************************/
 void ConteneurGenesListe::inserer(unsigned int id, const string &nom, const string &desc, const string &espece, const string &contenu) {
@@ -116,8 +116,8 @@ unsigned int ConteneurGenesListe::retirerEspece(const string &espece) {
 
 
 /***********************************************************************************
- * Description      : Methode qui permet de vider la liste 
- * Paramètres       : 
+ * Description      : Methode qui permet de vider la liste
+ * Paramètres       :
  * Type de retour   : void
  **********************************************************************************/
 void ConteneurGenesListe::vider() {

@@ -1,0 +1,4 @@
+/home/constantin/Documents/Github/inf1010/tp5/partie 2/main.cpp: In function ‘int main()’:
+/home/constantin/Documents/Github/inf1010/tp5/partie 2/main.cpp:73:31: error: ‘nullptr’ was not declared in this scope
+  if (genes->trouver(25107) == nullptr)
+                               ^
