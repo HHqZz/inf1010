@@ -8,15 +8,39 @@
 #define ERREUR_H
 
 using namespace std;
-class InvalidValueException : public logic_error
+class InvalidValueExceptionDivideZero : public logic_error
 {
 public:
-    InvalidValueException(string what_arg = "");
+    InvalidValueExceptionDivideZero();
 
 };
 
-#endif // ERREUR_H
-InvalidValueException::InvalidValueException(string
-what_arg) : logic_error(what_arg)
+
+InvalidValueExceptionDivideZero::InvalidValueExceptionDivideZero() : logic_error("Exception division par 0 impossible !")
 {
 }
+
+class InvalidValueExceptionInverseZero : public logic_error
+{
+public:
+    InvalidValueExceptionInverseZero();
+
+};
+
+
+InvalidValueExceptionInverseZero::InvalidValueExceptionInverseZero() : logic_error("Exception inverse de 0 impossible !")
+{
+}
+
+class InvalidValueExceptionNegativeSqrt : public logic_error
+{
+public:
+    InvalidValueExceptionNegativeSqrt();
+
+};
+
+
+InvalidValueExceptionNegativeSqrt::InvalidValueExceptionNegativeSqrt() : logic_error("Exception racine carree negative impossible !")
+{
+}
+#endif // ERREUR_H

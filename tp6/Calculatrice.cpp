@@ -47,7 +47,7 @@ Calculatrice::Calculatrice(QWidget *parent): QWidget(parent)
         digitButtons[i] = createButton(QString::number(i), SLOT(digitClicked()));
     }
 
-    Bouton *pointButton = createButton(tr("."), SLOT(pointCliked()));
+    Bouton *pointButton = createButton(tr("."), SLOT(pointClicked()));
     Bouton *changeSignButton = createButton(tr("+-"), SLOT(changeSignClicked()));
 
     Bouton *backspaceButton = createButton(tr("Backspace"), SLOT(backspaceClicked()));
@@ -170,11 +170,11 @@ void Calculatrice::unaryOperatorClicked()
             if(operand < 0.0)
             {
                 abortOperation();    // on ne fait pas la racine d'un nombre n�gatif
-                throw InvalidValueException("Exception racine carre negative impossible !");
+                throw InvalidValueExceptionNegativeSqrt();
             }
              result = sqrt(operand);
         }
-        catch (InvalidValueException& e)
+        catch (InvalidValueExceptionNegativeSqrt& e)
         {
             QMessageBox messageBox;
             messageBox.critical(0,"error",e.what());
@@ -192,11 +192,11 @@ void Calculatrice::unaryOperatorClicked()
             if(operand == 0.0)
             {
                abortOperation();      // on ne fait pas l'op�ration si l'op�rand est �gal � 0
-              throw InvalidValueException("Exception inverse de 0 impossible !");
+              throw InvalidValueExceptionInverseZero();
             }
              result = 1.0 / operand;
         }
-        catch (InvalidValueException& e)
+        catch (InvalidValueExceptionInverseZero& e)
         {
             QMessageBox messageBox;
             messageBox.critical(0,"error",e.what());
@@ -484,11 +484,11 @@ bool Calculatrice::calculate(double rightOperand, const QString &pendingOperator
             if (rightOperand == 0.0)
             {
                 abortOperation();
-                throw InvalidValueException("Exception division par 0 impossible !");
+                throw InvalidValueExceptionDivideZero();
             }
         factorSoFar /= rightOperand;
         }
-        catch(InvalidValueException& e)
+        catch(InvalidValueExceptionDivideZero& e)
         {
             QMessageBox messageBox;
             messageBox.critical(0,"error",e.what());
