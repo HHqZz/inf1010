@@ -140,7 +140,7 @@ void Calculatrice::digitClicked()
         return;
 
 
-    if(waitingForOperand)   // si l'utilisaruer clique sur un op�rande, on affiche 0
+    if(waitingForOperand)   // si l'utilisateur clique sur un op�rande, on affiche 0
     {
         display->clear();
         waitingForOperand = false;
@@ -181,18 +181,18 @@ void Calculatrice::unaryOperatorClicked()
             return;
         }
     }
-    else if(clickedOperator == tr("x^2"))
+    else if(clickedOperator == tr("x^2"))  // si on appuye sur puissance de deux
     {
-        result = pow(operand, 2.0);
+        result = pow(operand, 2.0);     // result prend la valeur de loperand a la puissance de deux
     }
-    else if(clickedOperator == tr("1/x"))
+    else if(clickedOperator == tr("1/x")) // SI on clique sur operateur dinversion
     {
         try
         {
             if(operand == 0.0)
             {
                abortOperation();      // on ne fait pas l'op�ration si l'op�rand est �gal � 0
-              throw InvalidValueExceptionInverseZero();
+              throw InvalidValueExceptionInverseZero(); // On lance lexception
             }
              result = 1.0 / operand;
         }
@@ -256,34 +256,34 @@ void Calculatrice::equalClicked()
 {
     double operand = display->text().toDouble();  // Convertit le texte affiche en double et le stocke dans operand
 
-    if(!pendingMultiplicativeOperator.isEmpty())  // S il y a une multiplication en attente
+    if(!pendingMultiplicativeOperator.isEmpty())  // S il y a une multiplication / division en attente
     {
-        if(!calculate(operand, pendingMultiplicativeOperator))
+        if(!calculate(operand, pendingMultiplicativeOperator))    // Si le calcul de loperation a retourne une erreur
         {
-            abortOperation();
+            abortOperation();   // on arrete le calcul en cours
             return;
         }
-        operand = factorSoFar;
+        operand = factorSoFar; // Operand prend alors la valeur de factorSoFar puis on reinitialise factorSoFar
         factorSoFar = 0.0;
         pendingMultiplicativeOperator.clear();
     }
-    if(!pendingAdditiveOperator.isEmpty())
+    if(!pendingAdditiveOperator.isEmpty())    // Si il y a une operation daddition en attente
     {
-        if(!calculate(operand, pendingAdditiveOperator))
+        if(!calculate(operand, pendingAdditiveOperator))  // Si le calcul de loperation a retourne une erreur
         {
-            abortOperation();
+            abortOperation();   // On arrete le calcul en cours
             return;
         }
-        pendingAdditiveOperator.clear();
+        pendingAdditiveOperator.clear();    // Il n y a plus doperation daddition en attente
     }
     else
     {
-        sumSoFar = operand;
+        sumSoFar = operand;     // Sinon sumSoFar prend la valeur de operand
     }
 
-    display->setText(QString::number(sumSoFar)); // Affichage
-    sumSoFar = 0.0;
-    waitingForOperand = true;
+    display->setText(QString::number(sumSoFar)); // Affichage du resultat
+    sumSoFar = 0.0; // On reinitialise la valeur de sumSoFar
+    waitingForOperand = true;   // On se met en attente dun operand
 }
 
 
@@ -301,7 +301,7 @@ void Calculatrice::pointClicked()
     }
     if(!display->text().contains("."))
     {
-        display->setText(display->text() + tr("."));
+        display->setText(display->text() + tr("."));    // Affichage du texte avec le point
     }
     waitingForOperand = false;
 }
@@ -481,10 +481,10 @@ bool Calculatrice::calculate(double rightOperand, const QString &pendingOperator
     {
         try
         {
-            if (rightOperand == 0.0)
+            if (rightOperand == 0.0)  //si le denominateur est 0
             {
                 abortOperation();
-                throw InvalidValueExceptionDivideZero();
+                throw InvalidValueExceptionDivideZero();    // lance lexception de division par 0
             }
         factorSoFar /= rightOperand;
         }
@@ -492,9 +492,9 @@ bool Calculatrice::calculate(double rightOperand, const QString &pendingOperator
         {
             QMessageBox messageBox;
             messageBox.critical(0,"error",e.what());
-            return false;
+            return false;   // operation echouee
         }
     }
-    return true;
+    return true;    // Flag que loperation sest passee avec succes !
 
 }

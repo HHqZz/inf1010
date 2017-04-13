@@ -8,9 +8,15 @@
 #define ERREUR_H
 
 using namespace std;
+
+
+/**********************************************************************************************
+ * Description      : Classe pour catcher l'exception de division par zero
+ **********************************************************************************************/
 class InvalidValueExceptionDivideZero : public logic_error
 {
 public:
+  // Constructeur par defaut
     InvalidValueExceptionDivideZero();
 
 };
@@ -20,9 +26,15 @@ InvalidValueExceptionDivideZero::InvalidValueExceptionDivideZero() : logic_error
 {
 }
 
+
+
+/**********************************************************************************************
+ * Description      : Classe pour catcher l'exception de l'inverse par zero
+ **********************************************************************************************/
 class InvalidValueExceptionInverseZero : public logic_error
 {
 public:
+  // Constructeur par defaut
     InvalidValueExceptionInverseZero();
 
 };
@@ -32,9 +44,15 @@ InvalidValueExceptionInverseZero::InvalidValueExceptionInverseZero() : logic_err
 {
 }
 
+
+
+/**********************************************************************************************
+ * Description      : Classe pour catcher l'exception de la racine carre d'un nombre negatif
+ **********************************************************************************************/
 class InvalidValueExceptionNegativeSqrt : public logic_error
 {
 public:
+  // Constructeur par defaut
     InvalidValueExceptionNegativeSqrt();
 
 };
@@ -43,4 +61,7 @@ public:
 InvalidValueExceptionNegativeSqrt::InvalidValueExceptionNegativeSqrt() : logic_error("Exception racine carree negative impossible !")
 {
 }
+
+
+
 #endif // ERREUR_H
