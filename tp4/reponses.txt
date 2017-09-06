@@ -1,9 +1,0 @@
-/*   1- Pourquoi la classe Piece est-elle une classe abstraite ? 
- 	La classe Piece est une classe abstraite car elle contient des methodes virtuelles pures. 
-	De plus, une piece est un concept abstrait pour gÈnÈraliser les pions, roi etc... 
- 2- Quel est líintÈrÍt díavoir un destructeur virtuel ?  	
-Declarer le destructeur virtuel permet au programme d'utiliser le destructeur adaptÈ de la classe fille afin de differencier les desteucteur lorsque 
-	celui-la est appellÈ 	 
- 3- Quelle autre solution est possible pour construire la classe Reine (aide : pensez a líhÈritage) ? 
- 	La reine peut se deplacer a la fois comme un fou et comme une tour . Ainsi elle pourrait heriter 	
-	de ces deux classes pour etre construite. */
