@@ -15,8 +15,14 @@ public:
 	void modifierTeinteRouge( int incrementRouge);
 	void modifierTeinteVert( int incrementVert);
 	void modifierTeinteBleu(int incrementBleu);
-		
-	void afficherPixel() const;
+
+	unsigned int getTauxRouge();
+	unsigned int getTauxVert();
+	unsigned int getTauxBleu();
+
+
+
+	void afficherPixel() const;  // Pertinent ?
 
 private:
 	unsigned int tauxRouge_ ;
