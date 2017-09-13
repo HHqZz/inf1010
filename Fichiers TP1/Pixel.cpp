@@ -1,6 +1,6 @@
 
-#include<Pixel.h>
-#include<const.h>
+#include"Pixel.h"
+#include"Const.h"
 
 
 Pixel::Pixel()
@@ -34,7 +34,7 @@ unsigned int Pixel::getTauxBleu()
   return tauxBleu_;
 }
 
-void modifierTeinteRouge( int incrementRouge)
+void Pixel::modifierTeinteRouge( int incrementRouge)
 {
   tauxRouge_ += incrementRouge ;
 
@@ -50,7 +50,7 @@ void modifierTeinteRouge( int incrementRouge)
 
 
 
-void modifierTeinteVert( int incrementVert)
+void Pixel::modifierTeinteVert( int incrementVert)
 {
   tauxVert_ += incrementVert ;
 
@@ -66,7 +66,7 @@ void modifierTeinteVert( int incrementVert)
 
 
 
-void modifierTeinteBleu(int incrementBleu)
+void Pixel::modifierTeinteBleu(int incrementBleu)
 {
   tauxBleu_ += incrementBleu ;
 
