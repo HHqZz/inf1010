@@ -62,11 +62,11 @@ unchar PixelCouleur::convertirPixelGris() const
 // Compare les types et les couleurs de deux pixels
 bool PixelCouleur::operator==(const PixelCouleur & pixel) const
 {
-	//a revoir
-	if (this->getType() == pixel.getType() // compare les types
-		&& this->retournerB() == pixel.retournerB() // compare le bleu
-		&& this->retournerG() == pixel.retournerG() // compare le vert
-		&& this->retournerR() == pixel.retournerR() // compare le rouge                                                                                                                    
+	
+	if (type_ == pixel.getType() // compare les types
+		&& donnee_[Couleur::R] == pixel.retournerB() // compare le bleu
+		&& donnee_[Couleur::G] == pixel.retournerG() // compare le vert
+		&& donnee_[Couleur::B] == pixel.retournerR() // compare le rouge                                                                                                                    
 		)
 		return true;
 

@@ -28,6 +28,11 @@ public:
     
     Image* operator[](const unsigned int& indice) const;
 
+	void toutMettreEnNB();
+	void toutMettreEnGris();
+	void toutMettreEnCouleur();
+	void toutEnregistrer();
+
 private:
     // Vecteur de pointeurs d'images
     std::vector<Image*> images_;

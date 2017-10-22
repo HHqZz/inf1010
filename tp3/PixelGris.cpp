@@ -45,6 +45,7 @@ unchar * PixelGris::convertirPixelCouleur() const // A VERIFIER ??
 	return pointeur; */
 	unchar* tableauRGB = new unchar[3];
 	tableauRGB[0] = tableauRGB[1] = tableauRGB[2] = donnee_;
+	return tableauRGB;
 }
 
 // Accesseur
@@ -59,9 +60,9 @@ bool PixelGris::operator==(const PixelGris & pixel) const
 	/*L’opérateur == qui permet de comparer deux PixelGris. Il doit comparer leur type
 	ainsi que la valeur de donnee_.
 	*/
-	// a revoir
-	if (this->getType() == pixel.getType() // compare les types
-		&& this->obtenirDonnee() == pixel.obtenirDonnee() // compare les valeurs de gris
+	
+	if (type_ == pixel.getType() // compare les types
+		&& donnee_ == pixel.obtenirDonnee() // compare les valeurs de gris
 		)                                                                                                                  
 		return true;
 

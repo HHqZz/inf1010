@@ -39,6 +39,11 @@ public:
     // Sauvegarde et lecture d'image sur disque
     void sauvegarderImage(const std::string &nomDuFichier = "./out.ppm");
     void lireImage(const std::string &nomDuFichier, const TypeImage& type);
+	
+	// Convertisseur 
+	void convertirNB();
+	void convertirGris();
+	void convertirCouleur();
 
     // Surcharge d'operateurs
     Image& operator=(const Image& image);

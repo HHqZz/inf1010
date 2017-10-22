@@ -4,7 +4,9 @@
 
 using namespace std;
 
-GroupeImage::GroupeImage() {};
+GroupeImage::GroupeImage() {}
+GroupeImage::~GroupeImage(){}
+
 
 // Fonction qui ajoute une image au vecteur si elle n'est pas presente
 bool GroupeImage::ajouterImage(Image* image) {
@@ -41,6 +43,11 @@ Image* GroupeImage::obtenirImage(unsigned int indiceImage) const {
     return images_[indiceImage];
 }
 
+unsigned int GroupeImage::obtenirNombreImages() const
+{
+	return images_.size();
+}
+
 // Surcharge de l'operateur += qui ajoute une image au vecteur
 GroupeImage& GroupeImage::operator+=(Image* image)
 {
@@ -53,6 +60,51 @@ GroupeImage& GroupeImage::operator-=(Image* image)
 {
     retirerImage(image->obtenirNomImage());
     return *this;
+}
+
+Image * GroupeImage::operator[](const unsigned int & indice) const
+{
+	return nullptr;
+}
+
+void GroupeImage::toutMettreEnNB()
+{
+	/*
+	boucle for sur chaque image du vecteur + appeller fonction correspondante  " convertirBN"
+	*/
+
+	for (int i = 0; i < images_.size(); i++) {
+		if (!(images_[i]->obtenirType() == TypeImage::NB))
+			images_[i]->convertirNB();
+	}
+}
+
+
+void GroupeImage::toutMettreEnGris()
+	{
+		for (int i = 0; i < images_.size(); i++) {
+			if (!(images_[i]->obtenirType() == TypeImage::Gris))
+				images_[i]->convertirGris();
+		}
+	}
+void GroupeImage::toutMettreEnCouleur()
+{
+
+	for (int i = 0; i < images_.size(); i++) {
+		if (!(images_[i]->obtenirType() == TypeImage::Couleurs))
+			images_[i]->convertirCouleur();
+	}
+}
+
+void GroupeImage::toutEnregistrer()
+{
+	for (int i = 0; i < images_.size(); i++) {
+		Image* image = images_[i];
+		string path = "../Fichiers TP3/Ensemble d'images/" + image->obtenirTypeEnString() + "/im" + to_string(i) + image->obtenirNomImage();
+		cout << "Sauvegarde de " << path << endl;
+		images_[i]->sauvegarderImage(path);
+	}
+	cout << endl;
 }
 
 // Surcharge de l'operateur de flux de sortie

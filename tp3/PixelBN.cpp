@@ -65,9 +65,9 @@ bool PixelBN::operator==(const PixelBN & pixel) const
 	/*- L’opérateur == qui permet de comparer deux PixelBN. Il doit comparer leur type
 	ainsi que la valeur donnee_.
 	*/
-	// a revoir
-	if (this->getType() == pixel.getType() // compare les types
-		&& this->obtenirDonnee() == pixel.obtenirDonnee() // compare les valeurs de gris
+
+	if (type_ == pixel.getType() // compare les types
+		&& donnee_ == pixel.obtenirDonnee() // compare les valeurs de gris
 		)
 		return true;
 

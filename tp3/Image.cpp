@@ -78,15 +78,22 @@ Image & Image::operator=(const Image & image)
 	// TODO: insérer une instruction return ici
 	if (!(*this == image)) {
 		pixels_ = new Pixel*(*image.pixels_);
-		for (int i = 0; i < taille_; i++)
-			pixels_[i] = image.pixels_[i];
 		cheminVersImageOriginale_ = image.cheminVersImageOriginale_;
 		nomDuFichier_ = image.nomDuFichier_;
 		hauteur_ = image.hauteur_;
 		largeur_ = image.largeur_;
 		taille_ = image.taille_;
 		typeImage_ = image.typeImage_;
+
+		// On supprime les donnees de l'ancienne image
+		for (unsigned int i = 0; i < taille_; i++) {
+			delete pixels_[i];
+			pixels_[i] = nullptr;
+		}
+		// Copie Profonde de la nouvelle image
+		this->copieProfonde(image);
 	}
+	return *this;
 }
 
 bool Image::operator==(const Image& image) {
@@ -291,6 +298,97 @@ void Image::lireImage(const string& nomDuFichier, const TypeImage& type) {
     // Fermeture du stream d'entre
     bmpIn.close();
  
+}
+
+
+void Image::convertirNB()
+{
+	if (!(obtenirType() == TypeImage::NB))
+	{
+
+		Pixel * newVal = nullptr;
+		for (int i = 0; i < taille_; i++)
+		{
+			switch (pixels_[i]->getType())
+			{
+			case TypePixel::Couleur:
+
+				PixelCouleur* pixelCouleur;
+				pixelCouleur = static_cast<PixelCouleur*>(pixels_[i]);
+				newVal = new PixelBN(pixelCouleur->convertirPixelBN());
+				break;
+
+			case TypePixel::NuanceDeGris:
+
+				PixelGris* pixelGris;
+				pixelGris = static_cast<PixelGris*>(pixels_[i]);
+				newVal = new PixelBN(pixelGris->convertirPixelBN());
+				break;
+			} // end switch
+		}	//end for
+	}// end if
+
+	else cout << " L image est deja en noir et blanc ! " << endl;
+
+}
+
+void Image::convertirGris()
+{
+	if (!(obtenirType() == TypeImage::Gris))
+	{
+		Pixel * newVal = nullptr;
+		for (int i = 0; i < taille_; i++)
+		{
+			switch (pixels_[i]->getType())
+			{
+			case TypePixel::Couleur:
+
+				PixelCouleur* pixelCouleur;
+				pixelCouleur = static_cast<PixelCouleur*>(pixels_[i]);
+				newVal = new PixelGris(pixelCouleur->convertirPixelGris());
+				break;
+
+			case TypePixel::NoireBlanc:
+
+				PixelBN* pixelGris;
+				pixelGris = static_cast<PixelBN*>(pixels_[i]);
+				newVal = new PixelGris(pixelGris->convertirPixelGris());
+				break;
+
+			}
+		} 
+	} 
+
+	else cout << " L image est deja en gris ! " << endl;
+}
+
+
+void Image::convertirCouleur()
+{
+	if (!(obtenirType() == TypeImage::Couleurs))
+	{
+		Pixel * newVal = nullptr;
+		for (int i = 0; i < taille_; i++)
+		{
+			switch (pixels_[i]->getType())
+			{
+			case TypePixel::NoireBlanc:
+
+				PixelBN* pixelBlancNoir;
+				pixelBlancNoir = static_cast<PixelBN*>(pixels_[i]);
+				newVal = new PixelBN(*(pixelBlancNoir->convertirPixelCouleur()), *(pixelBlancNoir->convertirPixelCouleur()), *(pc->convertirPixelCouleur()));
+				break;
+
+			case TypePixel::NuanceDeGris:
+
+				PixelGris* pixelGris;
+				pixelGris = static_cast<PixelGris*>(pixels_[i]);
+				newVal = new PixelCouleur(*(pixelGris->convertirPixelCouleur()), *(pixelGris->convertirPixelCouleur()), *(pixelGris->convertirPixelCouleur()));
+				break;
+			}
+		}
+	}
+		else cout << "L'image est deja en couleurs  " << endl;
 }
 
 // Ecriture de l'image sur disque
