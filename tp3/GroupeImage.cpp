@@ -73,32 +73,35 @@ void GroupeImage::toutMettreEnNB()
 	boucle for sur chaque image du vecteur + appeller fonction correspondante  " convertirBN"
 	*/
 
-	for (int i = 0; i < images_.size(); i++) {
+	for (unsigned int i = 0; i < images_.size(); i++) {
 		if (!(images_[i]->obtenirType() == TypeImage::NB))
 			images_[i]->convertirNB();
+		else  cout << "L'image " + images_[i]->obtenirNomImage() + " est deja en NB. " << endl << endl;
 	}
 }
 
 
 void GroupeImage::toutMettreEnGris()
 	{
-		for (int i = 0; i < images_.size(); i++) {
+		for (unsigned int i = 0; i < images_.size(); i++) {
 			if (!(images_[i]->obtenirType() == TypeImage::Gris))
 				images_[i]->convertirGris();
+			else cout << "L'image " + images_[i]->obtenirNomImage() + " est deja en gris. " << endl << endl;
 		}
 	}
 void GroupeImage::toutMettreEnCouleur()
 {
 
-	for (int i = 0; i < images_.size(); i++) {
+	for (unsigned int i = 0; i < images_.size(); i++) {
 		if (!(images_[i]->obtenirType() == TypeImage::Couleurs))
 			images_[i]->convertirCouleur();
+		else cout << "L'image " + images_[i]->obtenirNomImage() + " est deja en Couleurs. " << endl << endl;
 	}
 }
 
 void GroupeImage::toutEnregistrer()
 {
-	for (int i = 0; i < images_.size(); i++) {
+	for (unsigned int i = 0; i < images_.size(); i++) {
 		Image* image = images_[i];
 		string path = "../Fichiers TP3/Ensemble d'images/" + image->obtenirTypeEnString() + "/im" + to_string(i) + image->obtenirNomImage();
 		cout << "Sauvegarde de " << path << endl;
@@ -116,7 +119,8 @@ ostream& operator<<(ostream& os, const GroupeImage& groupeImage)
     os << "**************************************************" << endl << endl;
     
     for  (unsigned int j= 0; j < groupeImage.images_.size(); j++) {
-        os << *groupeImage.images_[j] << "--------------------------------------------------" << endl;
+        os << *groupeImage.images_[j] << endl;
+		os << "------------------------------------------------------------" << endl << endl;
     }
     
     os << endl;

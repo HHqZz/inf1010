@@ -3,8 +3,8 @@
 
 #include "Pixel.h"
 
-class PixelGris :
-	public Pixel
+class PixelGris : public Pixel
+	
 {
 public:
     // Constructeur par defaut
