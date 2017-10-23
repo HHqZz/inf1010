@@ -1,69 +1,87 @@
+/****************************************************************
+* Titre: Travail pratique #3 - Pixelgris.cpp
+* Date:  22/10/2017
+* Auteur : Constantin Bouis 1783438  & Xavier Ralay 1786307
+*****************************************************************/
 #include "PixelGris.h"
 
 
-//constructeur defaut
-PixelGris::PixelGris() {
+/****************************************************************************************
+* Description      : Construtcteur par défaut
+* Paramètres       : aucun
+* Type de retour   : aucun
+***************************************************************************************/
+PixelGris::PixelGris() : Pixel(TypePixel::NuanceDeGris) {
 	donnee_ = 0;
 }
 
-// Constructeur par parametre
-PixelGris::PixelGris(unsigned int donnee) {
+/****************************************************************************************
+* Description      : Constructeur par paramètre
+* Paramètres       : donnee(int)
+* Type de retour   : aucun
+***************************************************************************************/
+PixelGris::PixelGris(unsigned int donnee) : Pixel(TypePixel::NuanceDeGris) {
 	donnee_ = donnee;
 }
 
+/****************************************************************************************
+* Description      : Destructeur
+* Paramètres       : aucun
+* Type de retour   : aucun
+***************************************************************************************/
 PixelGris::~PixelGris()
 {
 }
 
-//todo
+/****************************************************************************************
+* Description      : retourne la valeur booléenne true si donnee_ a
+une valeur supérieure à 127 et false si sa valeur est égale ou inférieure à 127.
+* Paramètres       :
+* Type de retour   : bool
+***************************************************************************************/
 bool PixelGris::convertirPixelBN() const
 {
-	/*- Méthode convertirPixelBN() qui retourne la valeur booléenne true si donnee_ a
-	une valeur supérieure à 127 et false si sa valeur est égale ou inférieure à 127.
-	*/
+
 	if (donnee_ > 127)
 		return true;
 	else return false;
 }
 
-
-//todo
-unchar * PixelGris::convertirPixelCouleur() const // A VERIFIER ??
+/****************************************************************************************
+* Description      : retourne un pointeur unchar* sur un tableau
+comportant les valeurs RGB équivalentes donnant un PixelCouleur
+* Paramètres       : aucun
+* Type de retour   : unchar *
+***************************************************************************************/
+unchar * PixelGris::convertirPixelCouleur() const
 {
-	/* - Méthode convertirPixelCouleur() qui retourne un pointeur unchar* sur un tableau
-	comportant les valeurs RGB équivalentes donnant un PixelCouleur.
-	*/
-	/*unchar tableauRGB[3]; // cree tableau
-	// A revoir
-   //met les valeurs de gris dans le tableau
-	tableauRGB[0] = this->donnee_;
-	tableauRGB[1] = this->donnee_;
-	tableauRGB[2] = this->donnee_;
 
-	unchar* pointeur; // cree pointeur 
-	pointeur = &tableauRGB[0]; // pointe vers le premier element du tableau
-	return pointeur; */
 	unchar* tableauRGB = new unchar[3];
 	tableauRGB[0] = tableauRGB[1] = tableauRGB[2] = donnee_;
 	return tableauRGB;
 }
 
-// Accesseur
+/****************************************************************************************
+* Description      : Retourne la valeur de nuance de gris du pixel
+* Paramètres       : aucun
+* Type de retour   : unsigned int
+***************************************************************************************/
 unsigned int PixelGris::obtenirDonnee() const {
-    return donnee_;
+	return donnee_;
 }
 
-
-//todo
+/*****************************************************************************************************
+* Description      : surcharge de l'opérateur == qui retourne un bool en comparant les deux pixels
+* Paramètres       : pixel(PixelGris)
+* Type de retour   : bool
+*****************************************************************************************************/
 bool PixelGris::operator==(const PixelGris & pixel) const
 {
-	/*L’opérateur == qui permet de comparer deux PixelGris. Il doit comparer leur type
-	ainsi que la valeur de donnee_.
-	*/
-	
+
+
 	if (type_ == pixel.getType() // compare les types
 		&& donnee_ == pixel.obtenirDonnee() // compare les valeurs de gris
-		)                                                                                                                  
+		)
 		return true;
 
 	else return false;

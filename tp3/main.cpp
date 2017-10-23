@@ -56,13 +56,10 @@ int main() {
 
 	// Enregistrer toutes les images convertie
 	(*groupe).toutEnregistrer();
-
 	// Convertir toutes les images en Nuance de Gris ::::: Ne change pas le nom du TypeImage
 	(*groupe).toutMettreEnGris();
-	
 	// Enregistrer toutes les images grises
 	(*groupe).toutEnregistrer();
-
 	// Convertir toutes les images en Noir et Blanc
 	(*groupe).toutMettreEnNB();
 
@@ -104,7 +101,7 @@ int main() {
 	Cependant, il peut aussi être utilisé afin d expliciter des conversions implicites de type tel que un double vers un int.
 
 -----------------------------------------------
-/*
+*/
 
 
 
