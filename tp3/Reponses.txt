@@ -1,0 +1,30 @@
+/**************** QUESTIONS  *****************
+
+
+1. Pourquoi est-il logique de dériver une classe PixelCouleur d’une classe Pixel?
+	- Il est logique de dériver la classe PixelCouleur de la classe Pixel car on pourra toujours dire qu'un PixelCouleur EST un Pixel.
+	De plus, PixelCouleur réutilise au moins tous les attributs et toutes les methodes de la classe Pixel.
+
+-------------------------------------------------
+
+2. Considérez la situation suivante :
+
+	Pixel p1 = PixelCouleur(20, 30, 50);
+	Pixel p2 = PixelCouleur(12, 140, 86);
+	bool b = ( p1 == p2 );
+	cout << b << end;
+	
+	Est-il possible d’assigner à p1 et p2 des PixelCouleur? Pourquoi?
+	Quelle sera la valeur de b et pourquoi?
+
+	- Oui on peut assigner des pixelCouleurs a p1 et p2 car pixelCouleurs dérive de Pixel et donc la conversion de Pixel a PixelCouleur est possible.
+	- La valeur de b sera TRUE = 1 ;  Car p1 et p2 sont de type Pixel et donc l'operateur == appellé ici sera celui de la classe Pixel ;  Or cet
+	opérateur ne compare que les types des pixels; et dans notre cas p1 et p2 sont de même type.
+	
+------------------------------------------------
+3. À quoi sert le static_cast?
+	- Le static cast, dans notre cas, permet de forcer la conversion d'un objet de la classe de base en un objet de la classe dérivée.
+	Cependant, il peut aussi être utilisé afin d expliciter des conversions implicites de type tel que un double vers un int.
+
+-----------------------------------------------
+*/
