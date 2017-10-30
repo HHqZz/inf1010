@@ -1,0 +1,3 @@
+1/Non, nous ne pouvons pas instancier un objet de type Pixel car il s’agit d’une classe abstraite.
+2/La valeur de b sera false, car la surcharge utilisée de l'operateur == sera celle de la classe Pixel, or cette methode compare les valeurs R G B des deux pixels, dans notre cas ces valeurs sont differentes.
+3/3 / Si on considere la methode retournerR et non obtenirR comme dans l'enoncé, alors oui on peut faire *p1.retournerR() care p1 est un pointeur vers la classe couleurPixel, classe qui surchargé la fonction retournerR.De plus elle a été redéfini dans a classe PixelCouleur d'ou la possibilité de son utilisation.
