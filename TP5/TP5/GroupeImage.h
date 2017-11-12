@@ -5,9 +5,12 @@
 #ifndef TP3_GROUPEIMAGE_H
 #define TP3_GROUPEIMAGE_H
 
-#include <vector>
+#include <algorithm>
+#include <list>
 #include <string>
 #include "Image.h"
+
+using namespace std;
 
 class GroupeImage {
 public:
@@ -18,7 +21,7 @@ public:
 
     ~GroupeImage();
 
-	Image* obtenirImage(unsigned int indiceImage) const;
+	Image* obtenirImage(const std::string& nom) const;
 
     // Partie à ajouter et à modifier
     bool ajouterImage(Image* image);
@@ -48,14 +51,21 @@ public:
 	double obtenirTailleMoyenne();
 
 	// A implementer dans ce fichier
-	template<typename PredicatUnaire>
-	void appliquerFoncteurUnaire(PredicatUnaire& froncteur) const;
-	template<typename PredicatUnaire>
-	void supprimerElements(PredicatUnaire& froncteur);
 
+	template<typename PredicatUnaire>
+	void appliquerFoncteurUnaire(PredicatUnaire& froncteur) const {
+		for_each(images_.begin, images_.end, froncteur);
+	}
+
+
+	template<typename PredicatUnaire>
+	void supprimerElements(PredicatUnaire& froncteur) {
+		images_.remove_if(froncteur);
+	}
+	
 
 private:
-	std::vector<Image*> images_;
+	list<Image*> images_;
 
 };
 
